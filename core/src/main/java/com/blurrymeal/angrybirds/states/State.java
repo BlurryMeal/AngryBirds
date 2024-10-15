@@ -10,10 +10,19 @@ public abstract class State {
     protected Vector2 mouse;
     protected GameStateManager gameStateManager;
 
+    public static int currentStateLevel;
+
     protected State(GameStateManager gsm){
         this.gameStateManager = gsm;
         camera = new OrthographicCamera();
         mouse = new Vector2();
+    }
+
+    public int getCurrentStateLevel(){
+        return currentStateLevel;
+    }
+    public void setCurrentStateLevel(int currentStateLevel){
+        this.currentStateLevel = currentStateLevel;
     }
 
     protected abstract void handleInput();

@@ -47,8 +47,10 @@ public class Level02State extends State{
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
+
     public Level02State(GameStateManager gsm) {
         super(gsm);
+
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
         redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 25, 25);
@@ -96,6 +98,14 @@ public class Level02State extends State{
                 touchPos.y >= birdPosition.y && touchPos.y <= birdPosition.y + 25) {
                 isDragging = true;
             }
+
+
+            // Pause Button
+
+            if(touchPos.x >= 730 && touchPos.x <= 730 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60){
+                gameStateManager.pushState(new MenuState(gameStateManager));
+            }
+
         }
 
         if (Gdx.input.isTouched() && isDragging) {

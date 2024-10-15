@@ -49,8 +49,12 @@ public class Level01State extends State{
 
     private State level02State;
 
+
+
     public Level01State(GameStateManager gsm) {
         super(gsm);
+
+
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
         redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 25, 25);
@@ -101,11 +105,18 @@ public class Level01State extends State{
                 isDragging = true;
             }
 
+            // Pause Button
+
+            if(touchPos.x >= 730 && touchPos.x <= 730 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60){
+                gameStateManager.pushState(new MenuState(gameStateManager));
+            }
+
 
             // Skip Button
 
             if(touchPos.x >= 870 && touchPos.x <= 870 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60) {
                 gameStateManager.setState(level02State);
+                setCurrentStateLevel(2);
             }
         }
 
@@ -190,6 +201,12 @@ public class Level01State extends State{
         background.dispose();
         font.dispose();
     }
+
+    @Override
+    public Level01State clone(){
+        return new Level01State(gameStateManager);
+    }
+
 
 
 
