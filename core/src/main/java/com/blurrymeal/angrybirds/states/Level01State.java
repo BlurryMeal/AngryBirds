@@ -28,8 +28,8 @@ public class Level01State extends State{
     private List<Vector2> trajectoryPoints;
     private Bird redBird;
     private Texture redBirdTexture;
+    private ArrayList<Pig> pigs;
     private ArrayList<Obstacle> obstacles;
-    private Pig smallPig;
 
     private Texture pauseButton;
     private Texture restartButton;
@@ -65,12 +65,14 @@ public class Level01State extends State{
 
         level02State = new Level02State(gsm);
 
-        smallPig = new Pig(new Texture("smallPig.png"), 608, 230,27, 27);
 
         obstacles = new ArrayList<Obstacle>();
         obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 600, 170));
         obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 640, 170));
         obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 596, 225));
+
+        pigs = new ArrayList<Pig>();
+        pigs.add(new Pig(new Texture("smallPig.png"), 608, 230, 27, 27));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
@@ -147,10 +149,13 @@ public class Level01State extends State{
     public void update(float delta) {
         handleInput();
         redBird.update(delta);
-        smallPig.update(delta);
 
         for(Obstacle obstacle : obstacles) {
             obstacle.update(delta);
+        }
+
+        for(Pig pig : pigs) {
+            pig.update(delta);
         }
     }
 
@@ -170,8 +175,12 @@ public class Level01State extends State{
             obstacle.render(batch);
         }
 
+        for(Pig pig : pigs) {
+            pig.render(batch);
+        }
+
         redBird.render(batch);
-        smallPig.render(batch);
+
 
 
         // Draw trajectory

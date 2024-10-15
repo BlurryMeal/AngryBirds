@@ -146,7 +146,7 @@ public class Level02State extends State{
 
         batch.begin();
         batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
-        batch.draw(slingshot, 40, 160);
+        batch.draw(slingshot, 40, 70);
         batch.draw(pauseButton,730, 460, 60, 60);
         batch.draw(restartButton,800, 460, 60, 60);
         batch.draw(skipButton,870, 460, 60, 60);
