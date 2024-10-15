@@ -115,10 +115,14 @@ public class Level01State extends State{
 
 
             // Skip Button
-
             if(touchPos.x >= 870 && touchPos.x <= 870 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60) {
                 gameStateManager.setState(level02State);
                 setCurrentStateLevel(2);
+            }
+
+            //Restart Button
+            if(touchPos.x >= 800 && touchPos.x <= 860 && touchPos.y >= 460 && touchPos.y <= 520){
+                gameStateManager.setState(this.clone());
             }
         }
 

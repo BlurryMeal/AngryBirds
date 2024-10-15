@@ -101,9 +101,13 @@ public class Level02State extends State{
 
 
             // Pause Button
-
             if(touchPos.x >= 730 && touchPos.x <= 730 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60){
                 gameStateManager.pushState(new MenuState(gameStateManager));
+            }
+
+            //Restart Button
+            if(touchPos.x >= 800 && touchPos.x <= 860 && touchPos.y >= 460 && touchPos.y <= 520){
+                gameStateManager.setState(this.clone());
             }
 
         }
@@ -185,6 +189,11 @@ public class Level02State extends State{
         slingshot.dispose();
         background.dispose();
         font.dispose();
+    }
+
+    @Override
+    public Level02State clone(){
+        return new Level02State(gameStateManager);
     }
 
 

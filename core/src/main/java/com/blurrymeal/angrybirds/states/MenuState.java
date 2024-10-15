@@ -10,7 +10,7 @@ public class MenuState extends State{
 
     private Texture MenuBackground;
     private Texture resumeButton;
-    private Texture restartButton;
+    private Texture mapButton;
     private Texture exitButton;
 
 
@@ -20,7 +20,7 @@ public class MenuState extends State{
 
         MenuBackground = new Texture("pausedMenuBG.png");
         resumeButton = new Texture("resumeMenuButton.png");
-        restartButton = new Texture("restartMenuButton.png");
+        mapButton = new Texture("mapIcon.png");
         exitButton = new Texture("exitMenuButton.png");
 
         Level01State level01State = new Level01State(gsm);
@@ -37,18 +37,12 @@ public class MenuState extends State{
             //Resume Button
             if(touchPos.x >= Main.WIDTH/2 - 175 && touchPos.x <= Main.WIDTH/2 - 175 + 80 && touchPos.y >= Main.HEIGHT / 2 - 105 && touchPos.y <= Main.HEIGHT / 2 - 105 + 80){
                 gameStateManager.popState();
-                System.out.println("Popped");
             }
 
-            //Restart Button
+            //Map Button
             if (touchPos.x >= Main.WIDTH / 2 - 45 && touchPos.x <= Main.WIDTH / 2 - 45 + 80 && touchPos.y >= Main.HEIGHT / 2 - 105 && touchPos.y <= Main.HEIGHT / 2 - 105 + 80){
                 gameStateManager.popState();
-
-                if(getCurrentStateLevel() == 1){
-                    gameStateManager.setState(new Level01State(gameStateManager));
-                }else if(getCurrentStateLevel() == 2){
-                    gameStateManager.setState(new Level02State(gameStateManager));
-                }
+                gameStateManager.setState(new MapState(gameStateManager));
             }
 
             //Exit Button
@@ -73,7 +67,7 @@ public class MenuState extends State{
 
         batch.begin();
         batch.draw(resumeButton,Main.WIDTH/2 - 175, Main.HEIGHT/2 - 105, 80, 80);
-        batch.draw(restartButton, Main.WIDTH/2-45, Main.HEIGHT/2 - 105, 80, 80);
+        batch.draw(mapButton, Main.WIDTH/2-45, Main.HEIGHT/2 - 105, 80, 80);
         batch.draw(exitButton, Main.WIDTH/2 + 85, Main.HEIGHT/2 - 105, 80, 80);
 
         batch.end();

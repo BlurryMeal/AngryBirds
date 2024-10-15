@@ -22,8 +22,7 @@ public class HomeState extends State{
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){
-            gameStateManager.setState(new Level01State(gameStateManager));
-            setCurrentStateLevel(1);
+            gameStateManager.setState(new MapState(gameStateManager));
             dispose();
         }
     }
