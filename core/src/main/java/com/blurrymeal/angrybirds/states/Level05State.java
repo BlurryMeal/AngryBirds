@@ -16,7 +16,7 @@ import com.blurrymeal.angrybirds.entities.Pig;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Level02State extends State{
+public class Level05State extends State{
 
     private final int BIRDSLINGPOS_X=62;
     private final int BIRDSLINGPOS_Y=143;
@@ -38,7 +38,7 @@ public class Level02State extends State{
     private Texture birdCountContainer;
     private Texture pigCountContainer;
 
-    private int pigCounter = 2;
+    private int pigCounter = 3;
     private int birdCounter = 3;
 
     private BitmapFont font;
@@ -47,36 +47,48 @@ public class Level02State extends State{
     FreeTypeFontGenerator generator;
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
-    private State level03State;
+    private State level06State;
 
 
-    public Level02State(GameStateManager gsm) {
+    public Level05State(GameStateManager gsm) {
         super(gsm);
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
         redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 35, 35);
         slingshot = new Texture("slingshot.png");
-        background = new Texture("level2BG.jpg");
+        background = new Texture("level5BG.png");
         birdPosition = new Vector2(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
         trajectoryPoints = new ArrayList<>();
 
-        level03State = new Level03State(gsm);
+//        level06State = new Level06State(gsm);
 
         pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Texture("smallPig.png"), 658, 158, 27, 27));
-        pigs.add(new Pig(new Texture("smallPig.png"), 658, 192, 27, 27));
+        pigs.add(new Pig(new Texture("smallPig.png"), 640, 139, 27, 27));
+        pigs.add(new Pig(new Texture("smallPig.png"), 640, 198, 27, 27));
+        pigs.add(new Pig(new Texture("smallPig.png"), 642, 256, 27, 27));
 
         obstacles = new ArrayList<Obstacle>();
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 645, 130));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 645, 73));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 692, 73));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 692, 130));
-        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 645, 187));
-        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 645, 128));
-        obstacles.add(new Obstacle(new Texture("squareobs.png"), 658, 132));
-        obstacles.add(new Obstacle(new Texture("triangleobs.png"), 699, 75));
-        obstacles.add(new Obstacle(new Texture("triangleobs.png"), 617, 75));
+        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 628, 255));
+        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 676, 255));
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 629, 314));
+
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 601, 193));
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 654, 193));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 600, 139));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 680, 139));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 600, 166));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 680, 166));
+
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 601, 251));
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 654, 251));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 600, 198));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 680, 198));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 600, 224));
+        obstacles.add(new Obstacle(new Texture("squareobs.png"), 680, 224));
+
+
+
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
@@ -119,8 +131,8 @@ public class Level02State extends State{
 
             // Skip Button
             if(touchPos.x >= 870 && touchPos.x <= 870 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60) {
-                gameStateManager.setState(level03State);
-                setCurrentStateLevel(2);
+                gameStateManager.setState(level06State);
+                setCurrentStateLevel(5);
             }
 
 

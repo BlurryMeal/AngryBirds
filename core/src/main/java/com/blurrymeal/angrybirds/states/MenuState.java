@@ -25,6 +25,8 @@ public class MenuState extends State{
 
         Level01State level01State = new Level01State(gsm);
         Level02State level02State = new Level02State(gsm);
+        Level03State level03State = new Level03State(gsm);
+        Level04State level04State = new Level04State(gsm);
 
     }
 

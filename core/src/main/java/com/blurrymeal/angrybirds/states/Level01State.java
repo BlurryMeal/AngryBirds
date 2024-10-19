@@ -38,7 +38,7 @@ public class Level01State extends State{
     private Texture birdCountContainer;
     private Texture pigCountContainer;
 
-    private int pigCounter = 1;
+    private int pigCounter = 2;
     private int birdCounter = 3;
 
     private BitmapFont font;
@@ -67,12 +67,18 @@ public class Level01State extends State{
 
 
         obstacles = new ArrayList<Obstacle>();
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 600, 170));
         obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 640, 170));
         obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 596, 225));
+        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 560, 170));
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 556, 225));
+        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 580, 225));
+        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 620, 225));
+        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 576, 280));
+
 
         pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Texture("smallPig.png"), 608, 230, 27, 27));
+        pigs.add(new Pig(new Texture("smallPig.png"), 588, 230, 27, 27));
+        pigs.add(new Pig(new Texture("smallPig.png"), 588, 285, 27, 27));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
