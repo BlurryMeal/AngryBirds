@@ -3,8 +3,15 @@ angryBirdTitle.png
 birdCount.png
 Blatant 400.otf
 Blatant-Bold.otf
+bluehoriobst.png
+bluetriangleobst.png
+bluevertobst.png
 exitMenuButton.png
 goBackIcon.png
+greysmallobsthori.png
+greyvertob.png
+greyvertobs.png
+img.png
 level01Icon.png
 level02Icon.png
 level03Icon.png
@@ -12,6 +19,9 @@ level04Icon.png
 level05Icon.png
 level1BG.jpg
 level2BG.jpg
+level3BG.jpg
+level4BG.png
+level5BG.png
 libgdx.png
 mapBackground.png
 mapIcon.png
@@ -28,5 +38,7 @@ scoreContainer.png
 skipButton.png
 slingshot.png
 smallPig.png
+squareobs.png
+triangleobs.png
 woodHoriObst.png
 woodVertObst.png
