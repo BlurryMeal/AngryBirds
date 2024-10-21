@@ -18,8 +18,8 @@ import java.util.List;
 
 public class Level05State extends State{
 
-    private final int BIRDSLINGPOS_X=62;
-    private final int BIRDSLINGPOS_Y=143;
+    private final int BIRDSLINGPOS_X=72;
+    private final int BIRDSLINGPOS_Y=205;
     private Texture slingshot;
     private Texture background;
 
@@ -55,7 +55,7 @@ public class Level05State extends State{
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
-        redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 35, 35);
+        redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31);
         slingshot = new Texture("slingshot.png");
         background = new Texture("level5BG.png");
         birdPosition = new Vector2(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
@@ -183,7 +183,7 @@ public class Level05State extends State{
 
         batch.begin();
         batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
-        batch.draw(slingshot, 40, 70);
+        batch.draw(slingshot, 45, 137);
         batch.draw(pauseButton,730, 460, 60, 60);
         batch.draw(restartButton,800, 460, 60, 60);
         batch.draw(skipButton,870, 460, 60, 60);
