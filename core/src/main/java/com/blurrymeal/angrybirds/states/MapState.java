@@ -53,6 +53,24 @@ public class MapState extends State{
                 setCurrentStateLevel(2);
             }
 
+            //Level 03
+            if(touchPos.x >=200 && touchPos.x <= 280 && touchPos.y >= 170 && touchPos.y <= 250){
+                gameStateManager.setState(new Level03State(gameStateManager));
+                setCurrentStateLevel(3);
+            }
+
+            //Level 04
+            if(touchPos.x >=350 && touchPos.x <= 430 && touchPos.y >= 150 && touchPos.y <= 230){
+                gameStateManager.setState(new Level04State(gameStateManager));
+                setCurrentStateLevel(4);
+            }
+
+            //Level 05
+            if(touchPos.x >= 580 && touchPos.x <= 660 && touchPos.y >= 195 && touchPos.y <= 265){
+                gameStateManager.setState(new Level05State(gameStateManager));
+                setCurrentStateLevel(5);
+            }
+
 
         }
 

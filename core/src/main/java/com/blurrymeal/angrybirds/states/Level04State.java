@@ -224,8 +224,8 @@ public class Level04State extends State{
     }
 
     @Override
-    public Level02State clone(){
-        return new Level02State(gameStateManager);
+    public Level04State clone(){
+        return new Level04State(gameStateManager);
     }
 
 
