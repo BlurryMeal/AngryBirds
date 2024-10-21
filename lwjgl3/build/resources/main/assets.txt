@@ -6,6 +6,7 @@ Blatant-Bold.otf
 bluehoriobst.png
 bluetriangleobst.png
 bluevertobst.png
+dullBG.png
 exitMenuButton.png
 goBackIcon.png
 greysmallobsthori.png
@@ -22,7 +23,9 @@ level2BG.jpg
 level3BG.jpg
 level4BG.png
 level5BG.png
+levelFailedBG.png
 libgdx.png
+LoseButton.png
 mapBackground.png
 mapIcon.png
 menubg.jpg
@@ -40,5 +43,6 @@ slingshot.png
 smallPig.png
 squareobs.png
 triangleobs.png
+WinButton.png
 woodHoriObst.png
 woodVertObst.png

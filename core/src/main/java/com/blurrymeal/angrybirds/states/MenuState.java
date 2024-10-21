@@ -13,9 +13,12 @@ public class MenuState extends State{
     private Texture mapButton;
     private Texture exitButton;
 
+    private State previousState;
 
-    public MenuState(GameStateManager gsm){
+
+    public MenuState(GameStateManager gsm, State previousState) {
         super(gsm);
+        this.previousState = previousState;
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         MenuBackground = new Texture("pausedMenuBG.png");
@@ -63,6 +66,9 @@ public class MenuState extends State{
 
     @Override
     public void render(SpriteBatch batch) {
+
+        previousState.render(batch);
+
         batch.begin();
         batch.draw(MenuBackground, 0, 0, 960, 540);
         batch.end();

@@ -115,7 +115,7 @@ public class Level03State extends State{
 
             // Pause Button
             if(touchPos.x >= 730 && touchPos.x <= 730 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60){
-                gameStateManager.pushState(new MenuState(gameStateManager));
+                gameStateManager.pushState(new MenuState(gameStateManager, this));
             }
 
             // Skip Button

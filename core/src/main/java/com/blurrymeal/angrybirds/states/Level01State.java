@@ -49,6 +49,9 @@ public class Level01State extends State{
 
     private State level02State;
 
+    private Texture LoseButton;
+    private Texture WinButton;
+
 
 
     public Level01State(GameStateManager gsm) {
@@ -64,6 +67,9 @@ public class Level01State extends State{
         trajectoryPoints = new ArrayList<>();
 
         level02State = new Level02State(gsm);
+
+        LoseButton = new Texture("LoseButton.png");
+        WinButton = new Texture("WinButton.png");
 
 
         obstacles = new ArrayList<Obstacle>();
@@ -116,7 +122,7 @@ public class Level01State extends State{
             // Pause Button
 
             if(touchPos.x >= 730 && touchPos.x <= 730 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60){
-                gameStateManager.pushState(new MenuState(gameStateManager));
+                gameStateManager.pushState(new MenuState(gameStateManager, this));
             }
 
 
@@ -129,6 +135,16 @@ public class Level01State extends State{
             //Restart Button
             if(touchPos.x >= 800 && touchPos.x <= 860 && touchPos.y >= 460 && touchPos.y <= 520){
                 gameStateManager.setState(this.clone());
+            }
+
+            //Lose Button
+            if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 250 && touchPos.y <= 310){
+                gameStateManager.setState(new LoseLevelState(gameStateManager, this, 1));
+            }
+
+            //Win Button
+            if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 320 && touchPos.y <= 380){
+                gameStateManager.setState(new WinLevelState(gameStateManager, 1));
             }
         }
 
@@ -180,6 +196,9 @@ public class Level01State extends State{
         batch.draw(pauseButton,730, 460, 60, 60);
         batch.draw(restartButton,800, 460, 60, 60);
         batch.draw(skipButton,870, 460, 60, 60);
+
+        batch.draw(LoseButton, 880, 250, 60, 60);
+        batch.draw(WinButton, 880, 320, 60, 60);
 
         for(Obstacle obstacle : obstacles) {
             obstacle.render(batch);
