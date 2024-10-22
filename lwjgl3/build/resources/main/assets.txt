@@ -24,11 +24,14 @@ level3BG.jpg
 level4BG.png
 level5BG.png
 levelFailedBG.png
+levelWinBG.png
 libgdx.png
 LoseButton.png
 mapBackground.png
 mapIcon.png
 menubg.jpg
+newHighScoreSticker.png
+nextLevelButton.png
 pauseButton.png
 pausedMenuBG.png
 pigCount.png
