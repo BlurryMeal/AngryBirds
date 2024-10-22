@@ -62,6 +62,14 @@ public class LoseLevelState extends State{
             if(touchPos.x >= 435 && touchPos.x <= 525 && touchPos.y >= 128 && touchPos.y <= 218){
                 if(levelNo == 1){
                     gameStateManager.setState(new Level01State(gameStateManager));
+                }else if(levelNo == 2){
+                    gameStateManager.setState(new Level02State(gameStateManager));
+                }else if(levelNo == 3){
+                    gameStateManager.setState(new Level03State(gameStateManager));
+                }else if(levelNo == 4){
+                    gameStateManager.setState(new Level04State(gameStateManager));
+                }else if(levelNo == 5){
+                    gameStateManager.setState(new Level05State(gameStateManager));
                 }
             }
 

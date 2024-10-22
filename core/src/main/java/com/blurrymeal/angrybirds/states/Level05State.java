@@ -49,6 +49,9 @@ public class Level05State extends State{
 
     private State level06State;
 
+    private Texture LoseButton;
+    private Texture WinButton;
+
 
     public Level05State(GameStateManager gsm) {
         super(gsm);
@@ -62,6 +65,9 @@ public class Level05State extends State{
         trajectoryPoints = new ArrayList<>();
 
 //        level06State = new Level06State(gsm);
+
+        LoseButton = new Texture("LoseButton.png");
+        WinButton = new Texture("WinButton.png");
 
         pigs = new ArrayList<Pig>();
         pigs.add(new Pig(new Texture("smallPig.png"), 640, 139, 27, 27));
@@ -131,14 +137,23 @@ public class Level05State extends State{
 
             // Skip Button
             if(touchPos.x >= 870 && touchPos.x <= 870 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60) {
-                gameStateManager.setState(level06State);
-                setCurrentStateLevel(5);
+                gameStateManager.setState(new MapState(gameStateManager));
             }
 
 
             //Restart Button
             if(touchPos.x >= 800 && touchPos.x <= 860 && touchPos.y >= 460 && touchPos.y <= 520){
                 gameStateManager.setState(this.clone());
+            }
+
+            //Lose Button
+            if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 250 && touchPos.y <= 310){
+                gameStateManager.setState(new LoseLevelState(gameStateManager, this, 5));
+            }
+
+            //Win Button
+            if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 320 && touchPos.y <= 380){
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 5));
             }
 
         }
@@ -187,6 +202,9 @@ public class Level05State extends State{
         batch.draw(pauseButton,730, 460, 60, 60);
         batch.draw(restartButton,800, 460, 60, 60);
         batch.draw(skipButton,870, 460, 60, 60);
+
+        batch.draw(LoseButton, 880, 250, 60, 60);
+        batch.draw(WinButton, 880, 320, 60, 60);
 
         for(Obstacle obstacle : obstacles) {
             obstacle.render(batch);

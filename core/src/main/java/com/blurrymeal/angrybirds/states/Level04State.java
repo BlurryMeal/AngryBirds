@@ -49,6 +49,9 @@ public class Level04State extends State{
 
     private State level05State;
 
+    private Texture LoseButton;
+    private Texture WinButton;
+
 
     public Level04State(GameStateManager gsm) {
         super(gsm);
@@ -62,6 +65,9 @@ public class Level04State extends State{
         trajectoryPoints = new ArrayList<>();
 
         level05State = new Level05State(gsm);
+
+        LoseButton = new Texture("LoseButton.png");
+        WinButton = new Texture("WinButton.png");
 
         pigs = new ArrayList<Pig>();
         pigs.add(new Pig(new Texture("smallPig.png"), 652, 238, 27, 27));
@@ -139,6 +145,16 @@ public class Level04State extends State{
                 gameStateManager.setState(this.clone());
             }
 
+            //Lose Button
+            if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 250 && touchPos.y <= 310){
+                gameStateManager.setState(new LoseLevelState(gameStateManager, this, 4));
+            }
+
+            //Win Button
+            if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 320 && touchPos.y <= 380){
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 4));
+            }
+
         }
 
         if (Gdx.input.isTouched() && isDragging) {
@@ -185,6 +201,9 @@ public class Level04State extends State{
         batch.draw(pauseButton,730, 460, 60, 60);
         batch.draw(restartButton,800, 460, 60, 60);
         batch.draw(skipButton,870, 460, 60, 60);
+
+        batch.draw(LoseButton, 880, 250, 60, 60);
+        batch.draw(WinButton, 880, 320, 60, 60);
 
         for(Obstacle obstacle : obstacles) {
             obstacle.render(batch);
