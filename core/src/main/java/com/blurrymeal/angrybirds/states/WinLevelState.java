@@ -55,6 +55,7 @@ public class WinLevelState extends State{
         generator.dispose();
 
         score = 0;
+        highScore = 0;
 
         restartButton = new Texture("restartButton.png");
         mapIcon = new Texture("mapIcon.png");
@@ -99,7 +100,7 @@ public class WinLevelState extends State{
                 }else if(levelNo == 4){
                     gameStateManager.setState(new Level05State(gameStateManager));
                 }else if(levelNo == 5){
-                    gameStateManager.setState(new MapState(gameStateManager));
+                    gameStateManager.setState(new GameEndState(gameStateManager));
                 }
             }
 

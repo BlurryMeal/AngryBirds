@@ -137,7 +137,7 @@ public class Level05State extends State{
 
             // Skip Button
             if(touchPos.x >= 870 && touchPos.x <= 870 + 60 && touchPos.y >= 460 && touchPos.y <= 460 + 60) {
-                gameStateManager.setState(new MapState(gameStateManager));
+                gameStateManager.setState(new GameEndState(gameStateManager));
             }
 
 

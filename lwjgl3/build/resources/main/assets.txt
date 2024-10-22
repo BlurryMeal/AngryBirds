@@ -8,6 +8,8 @@ bluetriangleobst.png
 bluevertobst.png
 dullBG.png
 exitMenuButton.png
+gameEndBG.jpg
+gameEndContainer.png
 goBackIcon.png
 greysmallobsthori.png
 greyvertob.png
