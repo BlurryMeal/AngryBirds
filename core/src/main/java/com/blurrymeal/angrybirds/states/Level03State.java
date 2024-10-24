@@ -52,6 +52,9 @@ public class Level03State extends State{
     private Texture LoseButton;
     private Texture WinButton;
 
+    private Texture loadGameButton;
+    private BitmapFont saveGameFont;
+
 
     public Level03State(GameStateManager gsm) {
         super(gsm);
@@ -92,6 +95,8 @@ public class Level03State extends State{
         birdCountContainer = new Texture("birdCount.png");
         pigCountContainer = new Texture("pigCount.png");
 
+        loadGameButton = new Texture("loadGameButton.png");
+
         score = 0;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("angrybirds-regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -101,6 +106,9 @@ public class Level03State extends State{
 
         parameter.size = 28;
         scoreFont = generator.generateFont(parameter);
+
+        parameter.size = 24;
+        saveGameFont = generator.generateFont(parameter);
 
         generator.dispose();
 
@@ -144,6 +152,12 @@ public class Level03State extends State{
             //Win Button
             if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 320 && touchPos.y <= 380){
                 gameStateManager.setState(new WinLevelState(gameStateManager, this, 3));
+            }
+
+            //Save Button
+            if(touchPos.x >= 545 && touchPos.x <= 715 && touchPos.y >= Main.HEIGHT - 75 && touchPos.y <= Main.HEIGHT - 25){
+                System.out.println("Game Saved");
+                gameStateManager.pushState(new HomeState(gameStateManager));
             }
 
         }
@@ -214,6 +228,7 @@ public class Level03State extends State{
         batch.draw(scoreContainer, 10, 470, 260, 50);
         batch.draw(birdCountContainer, 10, 370,65, 92);
         batch.draw(pigCountContainer, 85, 370,65, 92);
+        batch.draw(loadGameButton, 545, Main.HEIGHT - 75, 170, 50);
         batch.end();
 
 
@@ -221,6 +236,7 @@ public class Level03State extends State{
         font.draw(batch, "CURRENT SCORE: " + score, 20, Main.HEIGHT - 36);
         scoreFont.draw(batch,Integer.toString(birdCounter), 35, Main.HEIGHT - 135);
         scoreFont.draw(batch,Integer.toString(pigCounter), 112, Main.HEIGHT - 135);
+        saveGameFont.draw(batch, "SAVE GAME", 575, Main.HEIGHT - 40);
         batch.end();
     }
 

@@ -28,6 +28,7 @@ level5BG.png
 levelFailedBG.png
 levelWinBG.png
 libgdx.png
+loadGameButton.png
 LoseButton.png
 mapBackground.png
 mapIcon.png

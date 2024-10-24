@@ -10,6 +10,10 @@ public class GameStateManager {
         states = new Stack<State>();
     }
 
+    public Stack<State> getStates() {
+        return states;
+    }
+
     public void pushState(State state) {
         states.push(state);
     }
