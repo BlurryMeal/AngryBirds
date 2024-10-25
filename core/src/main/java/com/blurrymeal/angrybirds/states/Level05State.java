@@ -26,7 +26,7 @@ public class Level05State extends State{
     private boolean isDragging = false;
     private Vector2 birdPosition;
     private List<Vector2> trajectoryPoints;
-    private Bird redBird;
+    private ArrayList<Bird> birds;
     private Texture redBirdTexture;
     private ArrayList<Obstacle> obstacles;
     private ArrayList<Pig> pigs;
@@ -61,7 +61,10 @@ public class Level05State extends State{
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
-        redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31);
+        birds = new ArrayList<Bird>();
+        birds.add(new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
+        birds.add(new Bird(redBirdTexture, 55, 137, 31, 31));
+        birds.add(new Bird(redBirdTexture, 25, 137, 31, 31));
         slingshot = new Texture("slingshot.png");
         background = new Texture("level5BG.png");
         birdPosition = new Vector2(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
@@ -179,7 +182,9 @@ public class Level05State extends State{
             birdPosition.x = Math.max(BIRDSLINGPOS_X - 50, Math.min(touchPos.x, BIRDSLINGPOS_X));
             birdPosition.y = Math.max(BIRDSLINGPOS_Y - 50, Math.min(touchPos.y, BIRDSLINGPOS_Y + 50));
 
-            redBird.getPosition().set(birdPosition.x, birdPosition.y);
+            for (Bird bird : birds){
+                bird.getPosition().set(birdPosition.x, birdPosition.y);
+            }
 
             Vector2 velocity = new Vector2(BIRDSLINGPOS_X - birdPosition.x, BIRDSLINGPOS_Y - birdPosition.y).scl(3);
             trajectoryPoints = calculateTrajectory(birdPosition, velocity, 0.1f, 30);
@@ -195,7 +200,9 @@ public class Level05State extends State{
     @Override
     public void update(float delta) {
         handleInput();
-        redBird.update(delta);
+        for (Bird bird : birds){
+            bird.update(delta);
+        }
         for(Pig pig : pigs) {
             pig.update(delta);
         }
@@ -224,7 +231,9 @@ public class Level05State extends State{
             obstacle.render(batch);
         }
 
-        redBird.render(batch);
+        for (Bird bird : birds){
+            bird.render(batch);
+        }
         for(Pig pig : pigs) {
             pig.render(batch);
         }

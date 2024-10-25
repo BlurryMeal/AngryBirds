@@ -27,7 +27,6 @@ public class Level03State extends State{
     private Vector2 birdPosition;
     private List<Vector2> trajectoryPoints;
     private ArrayList<Bird> birds;
-
     private Texture redBirdTexture;
     private ArrayList<Obstacle> obstacles;
     private ArrayList<Pig> pigs;
