@@ -26,7 +26,7 @@ public class Level01State extends State{
     private boolean isDragging = false;
     private Vector2 birdPosition;
     private List<Vector2> trajectoryPoints;
-    private Bird redBird;
+    private ArrayList<Bird> birds;
     private Texture redBirdTexture;
     private ArrayList<Pig> pigs;
     private ArrayList<Obstacle> obstacles;
@@ -63,7 +63,10 @@ public class Level01State extends State{
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
-        redBird = new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31);
+        birds = new ArrayList<Bird>();
+        birds.add(new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
+        birds.add(new Bird(redBirdTexture, 40, 170, 31, 31));
+
         slingshot = new Texture("slingshot.png");
         background = new Texture("level1BG.jpg");
         birdPosition = new Vector2(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
@@ -171,7 +174,9 @@ public class Level01State extends State{
             birdPosition.x = Math.max(BIRDSLINGPOS_X - 50, Math.min(touchPos.x, BIRDSLINGPOS_X));
             birdPosition.y = Math.max(BIRDSLINGPOS_Y - 50, Math.min(touchPos.y, BIRDSLINGPOS_Y + 50));
 
-            redBird.getPosition().set(birdPosition.x, birdPosition.y);
+            for (Bird bird : birds){
+                bird.getPosition().set(birdPosition.x, birdPosition.y);
+            }
 
             Vector2 velocity = new Vector2(BIRDSLINGPOS_X - birdPosition.x, BIRDSLINGPOS_Y - birdPosition.y).scl(3);
             trajectoryPoints = calculateTrajectory(birdPosition, velocity, 0.1f, 30);
@@ -187,7 +192,10 @@ public class Level01State extends State{
     @Override
     public void update(float delta) {
         handleInput();
-        redBird.update(delta);
+
+        for (Bird bird: birds){
+            bird.update(delta);
+        }
 
         for(Obstacle obstacle : obstacles) {
             obstacle.update(delta);
@@ -221,8 +229,9 @@ public class Level01State extends State{
             pig.render(batch);
         }
 
-        redBird.render(batch);
-
+        for (Bird bird: birds){
+            bird.render(batch);
+        }
 
 
         // Draw trajectory
