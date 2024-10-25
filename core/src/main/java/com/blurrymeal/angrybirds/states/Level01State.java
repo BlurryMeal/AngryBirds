@@ -66,6 +66,7 @@ public class Level01State extends State{
         birds = new ArrayList<Bird>();
         birds.add(new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
         birds.add(new Bird(redBirdTexture, 40, 170, 31, 31));
+        birds.add(new Bird(redBirdTexture, 10, 170, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level1BG.jpg");
