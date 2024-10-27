@@ -1,35 +1,36 @@
 # AngryBirds
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+This project is an Angry Birds-inspired game built using Java and the libGDX framework. The game requires players to launch birds at structures to eliminate pigs and progress through levels.
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
 
-## Platforms
+## Set Up
+- `Open IntelliJ` : Navigate to and Open the unzipped project folder.
+- IntelliJ should automatically detect the gradle configuration and import the project.
+- It will then import all dependencies and gradle elements, after which can you access and execute the code using the run commands provided below.
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
-- `android`: Android mobile platform. Needs Android SDK.
 
-## Gradle
+## Run Instruction ( via Terminal )
+- `./gradlew lwjgl3:run`
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `android:lint`: performs Android project validation.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+## Run Instruction
+- Click on the Gradle Icon on the right vertical panel.
+- Open the `lwjgl3` folder
+- Open the `Tasks` folder under that and then open the `application` folder under that.
+- Execute the `run` file in that folder in order to execute the project.
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+## Flow of Program
+- You can choose from either `Start Game` or `Load Game` when you open the project.
+- After Starting the game, you will be redirected to the `Map` screen where you can chose the level you want to play or go back to the home screen.
+- After choosing the level, you can view the various angry birds assets, current score, check how many birds and pigs are left, access the pause, save game, menu screen, win screen, lose screen and skip functionalities.
+- You can also view the trajectory of the birds when you pull them from the slingshot.
+- When you click on the win screen or lose screen on the right you can view the win game or lose game overlay and functional buttons on it respectively.
+- You can also open the menu overlay on each level and access different functionalities of each level.
+- After saving the game, you can access it again by clicking load game in the home screen.
+- Finally, once you finish all the levels and just finished the last level. You will be able to access the Congratulations screen celebrating your win.
+
+
+## Online Sources
+- https://www.youtube.com/watch?v=rzBVTPaUUDg&list=PLZm85UZQLd2TPXpUJfDEdWTSgszionbJy
+- https://libgdx.com/dev/
+- https://stackoverflow.com/

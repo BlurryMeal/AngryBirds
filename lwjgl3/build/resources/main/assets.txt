@@ -6,6 +6,7 @@ Blatant-Bold.otf
 bluehoriobst.png
 bluetriangleobst.png
 bluevertobst.png
+cloud.png
 dullBG.png
 exitMenuButton.png
 gameEndBG.jpg
