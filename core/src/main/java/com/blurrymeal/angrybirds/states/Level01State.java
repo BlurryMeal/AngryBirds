@@ -1,3 +1,4 @@
+
 package com.blurrymeal.angrybirds.states;
 
 import com.badlogic.gdx.Gdx;
@@ -185,6 +186,13 @@ public class Level01State extends State{
 
         if (!Gdx.input.isTouched() && isDragging) {
             isDragging = false;
+            Vector2 velocity = new Vector2(BIRDSLINGPOS_X - birdPosition.x, BIRDSLINGPOS_Y - birdPosition.y).scl(3);
+            for (Bird bird : birds) {
+                if (!bird.isInMotion()) {
+                    bird.launch(velocity);
+                    break;
+                }
+            }
         }
     }
 
