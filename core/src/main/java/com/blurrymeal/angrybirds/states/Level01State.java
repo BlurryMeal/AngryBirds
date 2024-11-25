@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.*;
 import com.blurrymeal.angrybirds.Main;
 import com.blurrymeal.angrybirds.entities.Bird;
 import com.blurrymeal.angrybirds.entities.Obstacle;
 import com.blurrymeal.angrybirds.entities.Pig;
+import com.blurrymeal.angrybirds.entities.RedBird;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class Level01State extends State{
     private boolean isDragging = false;
     private Vector2 birdPosition;
     private List<Vector2> trajectoryPoints;
-    private ArrayList<Bird> birds;
+    private ArrayList<RedBird> birds;
     private Texture redBirdTexture;
     private ArrayList<Pig> pigs;
     private ArrayList<Obstacle> obstacles;
@@ -56,18 +58,59 @@ public class Level01State extends State{
     private Texture loadGameButton;
     private BitmapFont saveGameFont;
 
+    private World world;
+    private Box2DDebugRenderer debugRenderer;
+    private static final float TIME_STEP = 1/60f;
+
+
+    private void createGround(World world) {
+        float groundHeight = 160; // Match the visual ground height
+
+        // Define the ground body
+        BodyDef groundBodyDef = new BodyDef();
+        groundBodyDef.type = BodyDef.BodyType.StaticBody;
+        groundBodyDef.position.set(0, groundHeight / Main.PPM); // Align with visuals
+
+        // Create the ground body
+        Body groundBody = world.createBody(groundBodyDef);
+
+        // Extend the ground width to match level size
+        float groundWidth = 2000 / Main.PPM; // Example: 2000 pixels (adjust as needed)
+        PolygonShape groundShape = new PolygonShape();
+        groundShape.setAsBox(groundWidth, 5 / Main.PPM); // Extend width and small thickness
+
+        // Create the fixture for the ground
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = groundShape;
+        fixtureDef.friction = 1f; // Optional: Set friction
+        fixtureDef.restitution = 0; // Optional: Set restitution
+
+        groundBody.createFixture(fixtureDef);
+
+        // Dispose of the shape to free memory
+        groundShape.dispose();
+    }
+
+
+
 
 
     public Level01State(GameStateManager gsm) {
         super(gsm);
 
+        world = new World(new Vector2(0, -9.8f), true);
+        debugRenderer = new Box2DDebugRenderer();
+
+        createGround(world);
+
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
-        birds = new ArrayList<Bird>();
-        birds.add(new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
-        birds.add(new Bird(redBirdTexture, 40, 170, 31, 31));
-        birds.add(new Bird(redBirdTexture, 10, 170, 31, 31));
+        birds = new ArrayList<RedBird>();
+        birds.add(new RedBird(redBirdTexture, world,  BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
+
+//        birds.add(new Bird(redBirdTexture, 40, 170, 31, 31));
+//        birds.add(new Bird(redBirdTexture, 10, 170, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level1BG.jpg");
@@ -176,7 +219,7 @@ public class Level01State extends State{
             birdPosition.x = Math.max(BIRDSLINGPOS_X - 50, Math.min(touchPos.x, BIRDSLINGPOS_X));
             birdPosition.y = Math.max(BIRDSLINGPOS_Y - 50, Math.min(touchPos.y, BIRDSLINGPOS_Y + 50));
 
-            for (Bird bird : birds){
+            for (RedBird bird : birds){
                 bird.getPosition().set(birdPosition.x, birdPosition.y);
             }
 
@@ -187,7 +230,7 @@ public class Level01State extends State{
         if (!Gdx.input.isTouched() && isDragging) {
             isDragging = false;
             Vector2 velocity = new Vector2(BIRDSLINGPOS_X - birdPosition.x, BIRDSLINGPOS_Y - birdPosition.y).scl(3);
-            for (Bird bird : birds) {
+            for (RedBird bird : birds) {
                 if (!bird.isInMotion()) {
                     bird.launch(velocity);
                     break;
@@ -202,7 +245,9 @@ public class Level01State extends State{
     public void update(float delta) {
         handleInput();
 
-        for (Bird bird: birds){
+        world.step(TIME_STEP, 6, 2);
+
+        for (RedBird bird: birds){
             bird.update(delta);
         }
 
@@ -238,7 +283,7 @@ public class Level01State extends State{
             pig.render(batch);
         }
 
-        for (Bird bird: birds){
+        for (RedBird bird: birds){
             bird.render(batch);
         }
 
@@ -284,21 +329,21 @@ public class Level01State extends State{
 
     public List<Vector2> calculateTrajectory(Vector2 startPos, Vector2 velocity, float timeStep, int numPoints) {
         List<Vector2> trajectoryPoints = new ArrayList<>();
-        Vector2 gravity = new Vector2(0, -9.8f);  // gravity acting downward
+        Vector2 gravity = new Vector2(0, -9.8f); // Use the same gravity as the game world
 
         for (int i = 0; i < numPoints; i++) {
             float t = i * timeStep;
-            // Calculate the position using basic kinematic equation: s = ut + 0.5 * a * t^2
             float posX = startPos.x + velocity.x * t;
             float posY = startPos.y + velocity.y * t + 0.5f * gravity.y * t * t;
 
             trajectoryPoints.add(new Vector2(posX, posY));
 
-            if (posY < 0) break;  // Stop if the point goes below ground level
+            if (posY < 0) break; // Stop when the trajectory hits the ground
         }
 
         return trajectoryPoints;
     }
+
 
 
 }

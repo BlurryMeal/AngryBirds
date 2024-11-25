@@ -14,6 +14,8 @@ public class Main extends ApplicationAdapter {
     public static final int WIDTH = 960;
     public static final int HEIGHT = 540;
 
+    public static final float PPM = 100f;
+
     public static final String TITLE = "Angry Birds";
 
     private GameStateManager gameStateManager;
