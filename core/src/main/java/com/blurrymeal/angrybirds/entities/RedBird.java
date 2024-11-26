@@ -11,6 +11,7 @@ public class RedBird {
     private Body body; // Box2D body for physics simulation
     private float width;
     private float height;
+    private float maxDamage = 40f;
 
     private boolean inMotion;
 
@@ -48,6 +49,12 @@ public class RedBird {
         if (!inMotion) {
             body.setType(BodyDef.BodyType.StaticBody);
         }
+    }
+
+    public float calculateDamageForce(float impactVelocity) {
+        // Normalize the velocity to a 0-1 range
+        float normalizedDamage = Math.min(Math.abs(impactVelocity) / 20f, 1f);
+        return normalizedDamage * maxDamage;
     }
 
     public void launch(Vector2 initialVelocity) {
