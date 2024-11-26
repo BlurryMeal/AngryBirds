@@ -34,9 +34,11 @@ public class RedBird {
         fixtureDef.friction = 5.0f; // Friction with other objects
         fixtureDef.restitution = 0.1f; // Bounciness
 
-        body.setLinearDamping(4f);
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
 
-        body.createFixture(fixtureDef);
+        body.setLinearDamping(2f);
+
         shape.dispose(); // Clean up the shape
 
         inMotion = false;
@@ -71,5 +73,9 @@ public class RedBird {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    public Body getBody() {
+        return this.body;
     }
 }

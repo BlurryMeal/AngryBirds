@@ -21,7 +21,7 @@ public class Pigs {
         this.height = height;
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x / Main.PPM, y / Main.PPM);
         this.body = world.createBody(bodyDef);
 
@@ -34,7 +34,11 @@ public class Pigs {
         fixtureDef.friction = 0.5f; // Adjust as needed
         fixtureDef.restitution = 0.1f;
 
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
+
+        body.setLinearDamping(4f);
+
         shape.dispose();
     }
 

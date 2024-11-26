@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.blurrymeal.angrybirds.Collision;
 import com.blurrymeal.angrybirds.Main;
 import com.blurrymeal.angrybirds.entities.*;
 
@@ -61,30 +62,25 @@ public class Level01State extends State{
 
 
     private void createGround(World world) {
-        float groundHeight = 160; // Match the visual ground height
+        float groundHeight = 160;
 
-        // Define the ground body
         BodyDef groundBodyDef = new BodyDef();
         groundBodyDef.type = BodyDef.BodyType.StaticBody;
-        groundBodyDef.position.set(0, groundHeight / Main.PPM); // Align with visuals
+        groundBodyDef.position.set(0, groundHeight / Main.PPM);
 
-        // Create the ground body
         Body groundBody = world.createBody(groundBodyDef);
 
-        // Extend the ground width to match level size
-        float groundWidth = 2000 / Main.PPM; // Example: 2000 pixels (adjust as needed)
+        float groundWidth = 2000 / Main.PPM;
         PolygonShape groundShape = new PolygonShape();
-        groundShape.setAsBox(groundWidth, 5 / Main.PPM); // Extend width and small thickness
+        groundShape.setAsBox(groundWidth, 5 / Main.PPM);
 
-        // Create the fixture for the ground
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = groundShape;
-        fixtureDef.friction = 1f; // Optional: Set friction
-        fixtureDef.restitution = 0; // Optional: Set restitution
+        fixtureDef.friction = 1f;
+        fixtureDef.restitution = 0;
 
         groundBody.createFixture(fixtureDef);
 
-        // Dispose of the shape to free memory
         groundShape.dispose();
     }
 
@@ -97,6 +93,10 @@ public class Level01State extends State{
 
         world = new World(new Vector2(0, -9.8f), true);
         debugRenderer = new Box2DDebugRenderer();
+
+        world.step(1/60f, 6, 2);
+
+        world.setContactListener(new Collision());
 
         createGround(world);
 
@@ -286,7 +286,7 @@ public class Level01State extends State{
 
         // Draw trajectory
         for (Vector2 point : trajectoryPoints) {
-            batch.draw(redBirdTexture, point.x, point.y, 5, 5);  // Draw small circles as trajectory points
+            batch.draw(redBirdTexture, point.x, point.y, 5, 5);
         }
 
 
@@ -331,7 +331,7 @@ public class Level01State extends State{
 
     public List<Vector2> calculateTrajectory(Vector2 startPos, Vector2 velocity, float timeStep, int numPoints) {
         List<Vector2> trajectoryPoints = new ArrayList<>();
-        Vector2 gravity = new Vector2(0, -9.8f); // Use the same gravity as the game world
+        Vector2 gravity = new Vector2(0, -9.8f);
 
         for (int i = 0; i < numPoints; i++) {
             float t = i * timeStep;
