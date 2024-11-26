@@ -18,8 +18,8 @@ import java.util.List;
 
 public class Level01State extends State{
 
-    private final int BIRDSLINGPOS_X=68;
-    private final int BIRDSLINGPOS_Y=230;
+    private final int BIRDSLINGPOS_X=82;
+    private final int BIRDSLINGPOS_Y=242;
     private Texture slingshot;
     private Texture background;
 
@@ -29,7 +29,7 @@ public class Level01State extends State{
     private ArrayList<RedBird> birds;
     private Texture redBirdTexture;
     private ArrayList<Pigs> pigs;
-    private ArrayList<Obstacle> obstacles;
+    private ArrayList<Obstacles> obstacles;
 
     private Texture pauseButton;
     private Texture restartButton;
@@ -120,19 +120,19 @@ public class Level01State extends State{
         WinButton = new Texture("WinButton.png");
 
 
-        obstacles = new ArrayList<Obstacle>();
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 640, 170));
-        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 596, 225));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 560, 170));
-        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 556, 225));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 580, 225));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 620, 225));
-        obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 576, 280));
+        obstacles = new ArrayList<Obstacles>();
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 640, 170, world));
+        obstacles.add(new Obstacles(new Texture("woodHoriObst.png"), 596, 225, world));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 560, 170, world));
+        obstacles.add(new Obstacles(new Texture("woodHoriObst.png"), 556, 225, world));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 580, 225, world));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 620, 225, world));
+        obstacles.add(new Obstacles(new Texture("woodHoriObst.png"), 576, 280, world));
 
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 588, 230, 27, 27,world));
-        pigs.add(new Pigs(new Texture("smallPig.png"), 588, 285, 27, 27,world));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 603, 244, 27, 27,world));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 601, 298, 27, 27,world));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
@@ -248,7 +248,7 @@ public class Level01State extends State{
             bird.update(delta);
         }
 
-        for(Obstacle obstacle : obstacles) {
+        for(Obstacles obstacle : obstacles) {
             obstacle.update(delta);
         }
 
@@ -271,7 +271,7 @@ public class Level01State extends State{
         batch.draw(LoseButton, 880, 250, 60, 60);
         batch.draw(WinButton, 880, 320, 60, 60);
 
-        for(Obstacle obstacle : obstacles) {
+        for(Obstacles obstacle : obstacles) {
             obstacle.render(batch);
         }
 
@@ -309,6 +309,9 @@ public class Level01State extends State{
 
     @Override
     public void dispose() {
+        for (Obstacles obstacle : obstacles) {
+            obstacle.dispose();
+        }
         redBirdTexture.dispose();
         slingshot.dispose();
         background.dispose();
