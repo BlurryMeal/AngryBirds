@@ -11,10 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.blurrymeal.angrybirds.Main;
-import com.blurrymeal.angrybirds.entities.Bird;
-import com.blurrymeal.angrybirds.entities.Obstacle;
-import com.blurrymeal.angrybirds.entities.Pig;
-import com.blurrymeal.angrybirds.entities.RedBird;
+import com.blurrymeal.angrybirds.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,7 @@ public class Level01State extends State{
     private List<Vector2> trajectoryPoints;
     private ArrayList<RedBird> birds;
     private Texture redBirdTexture;
-    private ArrayList<Pig> pigs;
+    private ArrayList<Pigs> pigs;
     private ArrayList<Obstacle> obstacles;
 
     private Texture pauseButton;
@@ -133,9 +130,9 @@ public class Level01State extends State{
         obstacles.add(new Obstacle(new Texture("woodHoriObst.png"), 576, 280));
 
 
-        pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Texture("smallPig.png"), 588, 230, 27, 27));
-        pigs.add(new Pig(new Texture("smallPig.png"), 588, 285, 27, 27));
+        pigs = new ArrayList<Pigs>();
+        pigs.add(new Pigs(new Texture("smallPig.png"), 588, 230, 27, 27,world));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 588, 285, 27, 27,world));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
@@ -255,7 +252,7 @@ public class Level01State extends State{
             obstacle.update(delta);
         }
 
-        for(Pig pig : pigs) {
+        for(Pigs pig : pigs) {
             pig.update(delta);
         }
     }
@@ -264,7 +261,6 @@ public class Level01State extends State{
     public void render(SpriteBatch batch) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
         batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         batch.draw(slingshot, 40, 160);
@@ -279,7 +275,7 @@ public class Level01State extends State{
             obstacle.render(batch);
         }
 
-        for(Pig pig : pigs) {
+        for(Pigs pig : pigs) {
             pig.render(batch);
         }
 
@@ -307,6 +303,7 @@ public class Level01State extends State{
         scoreFont.draw(batch,Integer.toString(pigCounter), 112, Main.HEIGHT - 135);
         saveGameFont.draw(batch, "SAVE GAME", 575, Main.HEIGHT - 40);
         batch.end();
+//        debugRenderer.render(world, camera.combined.cpy().scl(Main.PPM));
     }
 
 
@@ -316,6 +313,8 @@ public class Level01State extends State{
         slingshot.dispose();
         background.dispose();
         font.dispose();
+        world.dispose();
+        debugRenderer.dispose();
     }
 
     @Override

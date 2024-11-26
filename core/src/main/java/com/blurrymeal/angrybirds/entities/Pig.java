@@ -1,3 +1,4 @@
+
 package com.blurrymeal.angrybirds.entities;
 
 import com.badlogic.gdx.graphics.Texture;
