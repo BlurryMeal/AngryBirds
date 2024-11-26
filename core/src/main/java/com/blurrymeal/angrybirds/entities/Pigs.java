@@ -12,6 +12,7 @@ public class Pigs {
     private float width;
     private float height;
     private Body body;
+    private float health = 100f;
 
 
     public Pigs(Texture texture, float x, float y, float width, float height, World world) {
@@ -24,14 +25,14 @@ public class Pigs {
         bodyDef.position.set(x / Main.PPM, y / Main.PPM);
         this.body = world.createBody(bodyDef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2f/Main.PPM, height / 2f/Main.PPM);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(width / 2f/Main.PPM);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f; // Not relevant for static bodies
         fixtureDef.friction = 0.5f; // Adjust as needed
-        fixtureDef.restitution = 0.2f;
+        fixtureDef.restitution = 0.1f;
 
         body.createFixture(fixtureDef);
         shape.dispose();
@@ -49,5 +50,18 @@ public class Pigs {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    public void takeDamage(float damage) {
+        health -= damage;
+        if (health <= 0) {
+            destroy();
+        }
+    }
+    private void destroy() {
+        // Handle pig destruction logic
+    }
+    public Body getBody() {
+        return body;
     }
 }
