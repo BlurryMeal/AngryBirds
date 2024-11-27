@@ -26,13 +26,13 @@ public class LoseLevelState extends State{
     FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
 
-    public LoseLevelState(GameStateManager gsm,State previousState, int level) {
+    public LoseLevelState(GameStateManager gsm,State previousState, int level, int score) {
         super(gsm);
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         levelNo = level;
         this.previousState = previousState;
+        this.score = score;
 
-        score = 0;
 
         loseLevelBG = new Texture("levelFailedBG.png");
         dullBG = new Texture("dullBG.png");
@@ -103,7 +103,7 @@ public class LoseLevelState extends State{
 
         batch.begin();
         font.draw(batch, "Level " + levelNo, 310, 380);
-        scoreFont.draw(batch, "HighScore: \n" + String.valueOf(score), 530, 385);
+        scoreFont.draw(batch, "Score: \n" + String.valueOf(score), 530, 385);
         batch.end();
     }
 

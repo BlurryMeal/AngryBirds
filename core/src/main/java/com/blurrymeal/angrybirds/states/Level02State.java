@@ -149,7 +149,7 @@ public class Level02State extends State{
 
             //Lose Button
             if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 250 && touchPos.y <= 310){
-                gameStateManager.setState(new LoseLevelState(gameStateManager, this, 2));
+//                gameStateManager.setState(new LoseLevelState(gameStateManager, this, 2));
             }
 
             //Win Button
