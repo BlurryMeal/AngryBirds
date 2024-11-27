@@ -63,6 +63,10 @@ public class Level01State extends State{
     private ArrayList<Pigs> pigsToRemove = new ArrayList<>();
 
 
+    private float winTimer = 0f;
+    private boolean isPigsClear = false;
+    private static final float WIN_DELAY = 1f;
+
     private void createGround(World world) {
         float groundHeight = 160;
 
@@ -246,8 +250,23 @@ public class Level01State extends State{
     public void update(float delta) {
         handleInput();
 
+
         pigCounter = pigs.size();
         birdCounter = birds.size();
+
+        if(pigCounter == 0 && !isPigsClear){
+            isPigsClear = true;
+            winTimer = 0f;
+        }
+
+        if(isPigsClear){
+            winTimer += delta;
+
+            if(winTimer >= WIN_DELAY){
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 1));
+                return;
+            }
+        }
 
         world.step(TIME_STEP, 6, 2);
 
