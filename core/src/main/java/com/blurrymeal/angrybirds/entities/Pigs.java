@@ -15,6 +15,7 @@ public class Pigs implements ContactListener {
     private float health = 100f;
     private World world;
     private boolean isDestroyed = false;
+    private static final float GROUND_HEIGHT = 160f;
 
 
     public Pigs(Texture texture, float x, float y, float width, float height, World world) {
@@ -51,6 +52,10 @@ public class Pigs implements ContactListener {
     }
 
     public void update(float deltaTime) {
+        if (body.getPosition().y * Main.PPM <= GROUND_HEIGHT +20) {
+            destroy();
+        }
+
         if (isDestroyed) {
             world.destroyBody(body);
         }

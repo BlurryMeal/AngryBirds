@@ -14,6 +14,7 @@ import com.blurrymeal.angrybirds.Main;
 import com.blurrymeal.angrybirds.entities.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Level01State extends State{
@@ -38,8 +39,8 @@ public class Level01State extends State{
     private Texture birdCountContainer;
     private Texture pigCountContainer;
 
-    private int pigCounter = 2;
-    private int birdCounter = 3;
+    private int pigCounter;
+    private int birdCounter;
 
     private BitmapFont font;
     private BitmapFont scoreFont;
@@ -245,6 +246,9 @@ public class Level01State extends State{
     public void update(float delta) {
         handleInput();
 
+        pigCounter = pigs.size();
+        birdCounter = birds.size();
+
         world.step(TIME_STEP, 6, 2);
 
         for (RedBird bird: birds){
@@ -255,7 +259,15 @@ public class Level01State extends State{
             obstacle.update(delta);
         }
 
-        pigs.removeIf(Pigs::isDestroyed);
+        for (Iterator<Pigs> iterator = pigs.iterator(); iterator.hasNext(); ) {
+            Pigs pig = iterator.next();
+            pig.update(delta);
+
+            if (pig.isDestroyed()) {
+                iterator.remove();
+                pigCounter--;
+            }
+        }
 
         for(Pigs pig : pigs) {
             pig.update(delta);
