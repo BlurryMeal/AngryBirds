@@ -95,42 +95,33 @@ public class Obstacles implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        // Check if this obstacle is involved in the collision
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
         if (fixtureA.getUserData() == this || fixtureB.getUserData() == this) {
-            // Get the other body involved in the collision
             Body otherBody = (fixtureA.getUserData() == this) ?
                 fixtureB.getBody() : fixtureA.getBody();
 
-            // Calculate rotation based on relative velocity
             Vector2 relativeVelocity = body.getLinearVelocity().sub(otherBody.getLinearVelocity());
 
-            // Determine rotation force based on collision intensity
             float rotationForce = Math.abs(relativeVelocity.len()) * 5f;
 
-            // Apply a random rotation direction
             float rotationDirection = Math.signum(MathUtils.random(-1f, 1f));
 
-            // Apply angular impulse
             body.applyAngularImpulse(rotationForce * rotationDirection, true);
         }
     }
 
     @Override
     public void endContact(Contact contact) {
-        // Optional: Add any end contact logic if needed
     }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        // Optional: Add any pre-solve logic if needed
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-        // Optional: Add any post-solve logic if needed
     }
 
     public void dispose() {
@@ -141,7 +132,6 @@ public class Obstacles implements ContactListener {
         return this.body;
     }
 
-    // Getter and setter for rotation
     public float getRotation() {
         return rotation;
     }

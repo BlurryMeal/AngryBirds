@@ -20,27 +20,35 @@ public class RedBird {
 
         // Define the body
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody; // The bird is a dynamic object
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x / Main.PPM, y / Main.PPM);
         this.body = world.createBody(bodyDef);
 
+        body.setUserData(this);
+
+
         // Define the shape
         CircleShape shape = new CircleShape();
-        shape.setRadius((width / 2) / Main.PPM); // Use half the width as the radius for a circular bird
+        shape.setRadius((width / 2) / Main.PPM);
 
         // Define the fixture
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 100.0f; // Mass/density of the bird
-        fixtureDef.friction = 5.0f; // Friction with other objects
-        fixtureDef.restitution = 0.1f; // Bounciness
+        fixtureDef.density = 100.0f;
+        fixtureDef.friction = 5.0f;
+        fixtureDef.restitution = 0.1f;
+
+
 
         Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
+        fixture.setUserData("RedBird");
+
+
+        System.out.println(fixture.getUserData());
 
         body.setLinearDamping(2f);
 
-        shape.dispose(); // Clean up the shape
+        shape.dispose();
 
         inMotion = false;
     }

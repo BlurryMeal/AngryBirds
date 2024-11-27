@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.blurrymeal.angrybirds.Collision;
 import com.blurrymeal.angrybirds.Main;
 import com.blurrymeal.angrybirds.entities.*;
 
@@ -60,6 +59,8 @@ public class Level01State extends State{
     private Box2DDebugRenderer debugRenderer;
     private static final float TIME_STEP = 1/60f;
 
+    private ArrayList<Pigs> pigsToRemove = new ArrayList<>();
+
 
     private void createGround(World world) {
         float groundHeight = 160;
@@ -79,7 +80,9 @@ public class Level01State extends State{
         fixtureDef.friction = 1f;
         fixtureDef.restitution = 0;
 
-        groundBody.createFixture(fixtureDef);
+
+        Fixture fixture = groundBody.createFixture(fixtureDef);
+        fixture.setUserData(this);
 
         groundShape.dispose();
     }
@@ -96,7 +99,6 @@ public class Level01State extends State{
 
         world.step(1/60f, 6, 2);
 
-        world.setContactListener(new Collision());
 
         createGround(world);
 
@@ -159,6 +161,7 @@ public class Level01State extends State{
 
 
     }
+
 
     @Override
     protected void handleInput() {
@@ -252,10 +255,14 @@ public class Level01State extends State{
             obstacle.update(delta);
         }
 
+        pigs.removeIf(Pigs::isDestroyed);
+
         for(Pigs pig : pigs) {
             pig.update(delta);
         }
+
     }
+
 
     @Override
     public void render(SpriteBatch batch) {
