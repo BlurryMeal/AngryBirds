@@ -8,7 +8,7 @@ import com.blurrymeal.angrybirds.Main;
 
 public class RedBird {
     private Texture texture;
-    private Body body; // Box2D body for physics simulation
+    private Body body;
     private float width;
     private float height;
     private float maxDamage = 40f;
@@ -18,7 +18,6 @@ public class RedBird {
     public RedBird(Texture texture, World world, float x, float y, float width, float height) {
         this.texture = texture;
 
-        // Define the body
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x / Main.PPM, y / Main.PPM);
@@ -27,11 +26,9 @@ public class RedBird {
         body.setUserData(this);
 
 
-        // Define the shape
         CircleShape shape = new CircleShape();
         shape.setRadius((width / 2) / Main.PPM);
 
-        // Define the fixture
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 100.0f;
@@ -59,8 +56,12 @@ public class RedBird {
         }
     }
 
+    public boolean hasStopped() {
+        return Math.abs(body.getLinearVelocity().x) < 0.1f &&
+            Math.abs(body.getLinearVelocity().y) < 0.1f;
+    }
+
     public float calculateDamageForce(float impactVelocity) {
-        // Normalize the velocity to a 0-1 range
         float normalizedDamage = Math.min(Math.abs(impactVelocity) / 20f, 1f);
         return normalizedDamage * maxDamage;
     }

@@ -29,6 +29,7 @@ public class Level01State extends State{
     private List<Vector2> trajectoryPoints;
     private ArrayList<RedBird> birds;
     private Texture redBirdTexture;
+    private Texture redBirdTexture2;
     private ArrayList<Pigs> pigs;
     private ArrayList<Obstacles> obstacles;
 
@@ -66,6 +67,10 @@ public class Level01State extends State{
     private float winTimer = 0f;
     private boolean isPigsClear = false;
     private static final float WIN_DELAY = 1f;
+
+    private float loseTimer = 0f;
+    private static final float LOSE_DELAY = 1.5f;
+    private boolean isBirdsClear = false;
 
     private void createGround(World world) {
         float groundHeight = 160;
@@ -110,7 +115,10 @@ public class Level01State extends State{
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
+        redBirdTexture2 = new Texture("redBird.png");
         birds = new ArrayList<RedBird>();
+        birds.add(new RedBird(redBirdTexture, world,  BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
+        birds.add(new RedBird(redBirdTexture, world,  BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
         birds.add(new RedBird(redBirdTexture, world,  BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
 
 //        birds.add(new Bird(redBirdTexture, 40, 170, 31, 31));
@@ -129,8 +137,8 @@ public class Level01State extends State{
 
         obstacles = new ArrayList<Obstacles>();
         obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 340, 170, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 340, 225, world, 90f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 360, 200, world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 360, 225, world, 90f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 380, 200, world, 0f));
         obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 580, 170, world, 0f));
         obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 620, 170, world, 0f));
         obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 595, 225, world, 90f));
@@ -140,6 +148,7 @@ public class Level01State extends State{
 
         pigs = new ArrayList<Pigs>();
         pigs.add(new Pigs(new Texture("smallPig.png"), 600, 350, 27, 27,world));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 360, 350, 27, 27,world));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
@@ -204,7 +213,7 @@ public class Level01State extends State{
 
             //Win Button
             if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 320 && touchPos.y <= 380){
-                gameStateManager.setState(new WinLevelState(gameStateManager, this, 1));
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 1, this.getScore()));
             }
 
             //Save Button
@@ -241,6 +250,8 @@ public class Level01State extends State{
                     break;
                 }
             }
+
+            trajectoryPoints.clear();
         }
     }
 
@@ -254,16 +265,63 @@ public class Level01State extends State{
         pigCounter = pigs.size();
         birdCounter = birds.size();
 
+        Iterator<RedBird> birdIterator = birds.iterator();
+        boolean allBirdsStationary = true;
+        boolean birdRemoved = false;
+        while (birdIterator.hasNext()) {
+            RedBird bird = birdIterator.next();
+            bird.update(delta);
+
+            if (bird.isInMotion() && bird.hasStopped()) {
+                bird.getBody().getWorld().destroyBody(bird.getBody());
+                birdIterator.remove();
+                birdCounter--;
+                birdRemoved = true;
+                break;
+            }else if(bird.isInMotion()){
+                allBirdsStationary = false;
+            }
+        }
+
+        if (birdRemoved && !birds.isEmpty()) {
+            birdPosition.set(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
+
+            RedBird nextBird = birds.get(0);
+
+            nextBird.getBody().setTransform(
+                BIRDSLINGPOS_X / Main.PPM,
+                BIRDSLINGPOS_Y / Main.PPM,
+                0
+            );
+            nextBird.getBody().setType(BodyDef.BodyType.StaticBody);
+
+            trajectoryPoints.clear();
+        }
+
+
+
         if(pigCounter == 0 && !isPigsClear){
             isPigsClear = true;
             winTimer = 0f;
+        }
+
+        if(birdCounter == 0 && pigCounter > 0 && !isBirdsClear){
+            loseTimer = 0f;
+            isBirdsClear = true;
+        }
+
+        if(isBirdsClear){
+            loseTimer += delta;
+            if(loseTimer >= LOSE_DELAY){
+                gameStateManager.setState(new LoseLevelState(gameStateManager, this, 1));
+            }
         }
 
         if(isPigsClear){
             winTimer += delta;
 
             if(winTimer >= WIN_DELAY){
-                gameStateManager.setState(new WinLevelState(gameStateManager, this, 1));
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 1, this.getScore()));
                 return;
             }
         }
@@ -278,6 +336,8 @@ public class Level01State extends State{
             obstacle.update(delta);
         }
 
+
+
         for (Iterator<Pigs> iterator = pigs.iterator(); iterator.hasNext(); ) {
             Pigs pig = iterator.next();
             pig.update(delta);
@@ -285,6 +345,7 @@ public class Level01State extends State{
             if (pig.isDestroyed()) {
                 iterator.remove();
                 pigCounter--;
+                score += pig.getScore();
             }
         }
 
@@ -292,6 +353,10 @@ public class Level01State extends State{
             pig.update(delta);
         }
 
+    }
+
+    public int getScore() {
+        return score;
     }
 
 
@@ -324,7 +389,7 @@ public class Level01State extends State{
 
         // Draw trajectory
         for (Vector2 point : trajectoryPoints) {
-            batch.draw(redBirdTexture, point.x, point.y, 5, 5);
+            batch.draw(redBirdTexture2, point.x, point.y, 5, 5);
         }
 
 

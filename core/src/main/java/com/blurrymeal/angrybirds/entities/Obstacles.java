@@ -30,24 +30,20 @@ public class Obstacles implements ContactListener {
         this.position = new Vector2(x, y);
         this.width = texture.getWidth();
         this.height = texture.getHeight();
-        this.rotation = initialRotation; // Set initial rotation
+        this.rotation = initialRotation;
         this.world = world;
         this.health = 50f;
 
-        // Create body definition
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set((x + width / 2) / Main.PPM, (y + height / 2) / Main.PPM);
         bodyDef.angle = rotation * MathUtils.degreesToRadians; // Convert rotation to radians
 
-        // Create body
         body = world.createBody(bodyDef);
 
-        // Create shape
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / Main.PPM, height / 2 / Main.PPM);
 
-        // Create fixture
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.friction = 2f;
@@ -57,11 +53,9 @@ public class Obstacles implements ContactListener {
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
 
-        // Configure body properties
         body.setLinearDamping(2f);
         body.setFixedRotation(false);
 
-        // Register contact listener
         world.setContactListener(this);
 
         shape.dispose();

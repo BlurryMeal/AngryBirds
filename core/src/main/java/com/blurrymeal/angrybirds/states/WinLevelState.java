@@ -33,7 +33,8 @@ public class WinLevelState extends State{
 
 
 
-    public WinLevelState(GameStateManager gsm,State previousState, int level) {
+
+    public WinLevelState(GameStateManager gsm,State previousState, int level, int score) {
         super(gsm);
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         levelNo = level;
@@ -41,6 +42,8 @@ public class WinLevelState extends State{
         dullBG = new Texture("dullBG.png");
         this.previousState = previousState;
         newHighScoreSticker = new Texture("newHighScoreSticker.png");
+
+        this.score = score;
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("angrybirds-regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

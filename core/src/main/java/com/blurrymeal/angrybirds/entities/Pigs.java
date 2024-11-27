@@ -16,6 +16,7 @@ public class Pigs implements ContactListener {
     private World world;
     private boolean isDestroyed = false;
     private static final float GROUND_HEIGHT = 160f;
+    private int pigScore = 800;
 
 
     public Pigs(Texture texture, float x, float y, float width, float height, World world) {
@@ -49,6 +50,14 @@ public class Pigs implements ContactListener {
         world.setContactListener(this);
 
         shape.dispose();
+    }
+
+    public int getScore(){
+        return pigScore;
+    }
+
+    public void setPigScore(int pigScore){
+        this.pigScore = pigScore;
     }
 
     public void update(float deltaTime) {

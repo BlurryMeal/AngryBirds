@@ -164,7 +164,7 @@ public class Level04State extends State{
 
             //Win Button
             if(touchPos.x >= 880 && touchPos.x <= 960 && touchPos.y >= 320 && touchPos.y <= 380){
-                gameStateManager.setState(new WinLevelState(gameStateManager, this, 4));
+//                gameStateManager.setState(new WinLevelState(gameStateManager, this, 4));
             }
 
             //Save Button
