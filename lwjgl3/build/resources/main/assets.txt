@@ -3,6 +3,7 @@ angryBirdTitle.png
 birdCount.png
 Blatant 400.otf
 Blatant-Bold.otf
+bluebird.png
 bluehoriobst.png
 bluetriangleobst.png
 bluevertobst.png

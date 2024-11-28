@@ -147,8 +147,8 @@ public class Level01State extends State{
 
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 600, 350, 27, 27,world));
-        pigs.add(new Pigs(new Texture("smallPig.png"), 360, 350, 27, 27,world));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 600, 350, 27, 27,world, 160f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 360, 350, 27, 27,world, 160f));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");

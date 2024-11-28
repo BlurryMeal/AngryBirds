@@ -15,15 +15,16 @@ public class Pigs implements ContactListener {
     private float health = 100f;
     private World world;
     private boolean isDestroyed = false;
-    private static final float GROUND_HEIGHT = 160f;
+    private float GROUND_HEIGHT;
     private int pigScore = 800;
 
 
-    public Pigs(Texture texture, float x, float y, float width, float height, World world) {
+    public Pigs(Texture texture, float x, float y, float width, float height, World world, float groundHeight) {
         this.texture = texture;
         this.width = width;
         this.height = height;
         this.world = world;
+        this.GROUND_HEIGHT = groundHeight;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -103,11 +104,16 @@ public class Pigs implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
+        System.out.println("help");
 
         if((fixtureA.getUserData().equals("Pig") && fixtureB.getUserData().equals("RedBird")) || (fixtureA.getUserData().equals("RedBird") && fixtureB.getUserData().equals("Pig"))) {
             System.out.println("OKAY?");
             destroy();
+        }
 
+        if((fixtureA.getUserData().equals("Pig") && fixtureB.getUserData().equals("BlueBird")) || (fixtureA.getUserData().equals("BlueBird") && fixtureB.getUserData().equals("Pig"))) {
+            System.out.println("OKAY?");
+            destroy();
         }
     }
 
