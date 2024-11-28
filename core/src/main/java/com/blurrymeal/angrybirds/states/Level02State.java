@@ -160,7 +160,6 @@ public class Level02State extends State{
 
         parameter.size = 28;
         scoreFont = generator.generateFont(parameter);
-
         parameter.size = 24;
         saveGameFont = generator.generateFont(parameter);
 
@@ -307,6 +306,14 @@ public class Level02State extends State{
                 return;
             }
         }
+        if(isPigsClear){
+            winTimer += delta;
+
+            if(winTimer >= WIN_DELAY){
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 2, this.getScore()));
+                return;
+            }
+        }
 
         world.step(TIME_STEP, 6, 2);
 
@@ -358,13 +365,15 @@ public class Level02State extends State{
             obstacle.render(batch);
         }
 
+        for(Pigs pig : pigs) {
+            pig.render(batch);
+        }
+
         for (BlueBird bird: birds){
             bird.render(batch);
         }
 
-        for(Pigs pig : pigs) {
-            pig.render(batch);
-        }
+
 
         // Draw trajectory
         for (Vector2 point : trajectoryPoints) {

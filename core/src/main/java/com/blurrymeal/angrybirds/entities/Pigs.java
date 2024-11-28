@@ -107,13 +107,29 @@ public class Pigs implements ContactListener {
         System.out.println("help");
 
         if((fixtureA.getUserData().equals("Pig") && fixtureB.getUserData().equals("RedBird")) || (fixtureA.getUserData().equals("RedBird") && fixtureB.getUserData().equals("Pig"))) {
-            System.out.println("OKAY?");
-            destroy();
+            Pigs pig = null;
+            if (fixtureA.getUserData().equals("Pig")) {
+                pig = (Pigs) fixtureA.getBody().getUserData();
+            } else {
+                pig = (Pigs) fixtureB.getBody().getUserData();
+            }
+
+            if (pig != null) {
+                pig.destroy();
+            }
         }
 
         if((fixtureA.getUserData().equals("Pig") && fixtureB.getUserData().equals("BlueBird")) || (fixtureA.getUserData().equals("BlueBird") && fixtureB.getUserData().equals("Pig"))) {
-            System.out.println("OKAY?");
-            destroy();
+            Pigs pig = null;
+            if (fixtureA.getUserData().equals("Pig")) {
+                pig = (Pigs) fixtureA.getBody().getUserData();
+            } else {
+                pig = (Pigs) fixtureB.getBody().getUserData();
+            }
+
+            if (pig != null) {
+                pig.destroy();
+            }
         }
     }
 
