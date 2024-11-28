@@ -25,14 +25,16 @@ public class Obstacles implements ContactListener {
     private World world;
     private float health;
 
-    public Obstacles(Texture texture, float x, float y, World world, float initialRotation) {
+
+    public Obstacles(Texture texture, float x, float y,float width, float height ,World world, float initialRotation) {
         this.texture = texture;
         this.position = new Vector2(x, y);
-        this.width = texture.getWidth();
-        this.height = texture.getHeight();
+        this.width = width;
+        this.height = height;
         this.rotation = initialRotation;
         this.world = world;
         this.health = 50f;
+
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -63,8 +65,9 @@ public class Obstacles implements ContactListener {
 
     public void update(float deltaTime) {
         // Update position and rotation
-        position.set(body.getPosition().x * Main.PPM, body.getPosition().y * Main.PPM);
-        rotation = body.getAngle() * MathUtils.radiansToDegrees;
+            position.set(body.getPosition().x * Main.PPM, body.getPosition().y * Main.PPM);
+            rotation = body.getAngle() * MathUtils.radiansToDegrees;
+
     }
 
     public void render(SpriteBatch batch) {
@@ -105,6 +108,9 @@ public class Obstacles implements ContactListener {
             body.applyAngularImpulse(rotationForce * rotationDirection, true);
         }
     }
+
+
+
 
     @Override
     public void endContact(Contact contact) {

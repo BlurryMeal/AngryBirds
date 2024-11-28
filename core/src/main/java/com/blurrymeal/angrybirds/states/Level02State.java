@@ -128,10 +128,10 @@ public class Level02State extends State{
         pigs.add(new Pigs(new Texture("smallPig.png"), 665, 160, 27, 27, world, 70f));
 
         obstacles = new ArrayList<Obstacles>();
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 645, 75, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 685, 75, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 665, 100, world, 90f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 1245, 130, world, 0f));
+//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 645, 75, world, 0f));
+//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 685, 75, world, 0f));
+//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 665, 100, world, 90f));
+//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 1245, 130, world, 0f));
 
 //        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 645, 73));
 //        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 692, 73));

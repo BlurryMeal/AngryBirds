@@ -136,19 +136,19 @@ public class Level01State extends State{
 
 
         obstacles = new ArrayList<Obstacles>();
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 340, 170, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 360, 225, world, 90f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 380, 200, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 580, 170, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 620, 170, world, 0f));
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 595, 225, world, 90f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 575, 220, 7,45,world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"),596 , 240,7,60, world, 90f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 615, 220, 7,45, world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 570, 160,7,45,world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 620, 160, 7,45,world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 595, 190, 7,65,world, 90f));
 
-        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 1250, 170, world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 1250, 170, 30,30,world, 0f));
 
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 600, 350, 27, 27,world, 160f));
-        pigs.add(new Pigs(new Texture("smallPig.png"), 360, 350, 27, 27,world, 160f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 596, 230, 27, 27,world, 160f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 598, 280, 27, 27,world, 160f));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
