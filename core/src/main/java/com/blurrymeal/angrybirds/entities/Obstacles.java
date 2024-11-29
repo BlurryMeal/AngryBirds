@@ -140,4 +140,32 @@ public class Obstacles implements ContactListener {
         this.rotation = rotation;
         body.setTransform(body.getPosition(), rotation * MathUtils.degreesToRadians);
     }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public float getX() {
+        return position.x;
+    }
+
+    public float getY(){
+        return position.y;
+    }
+
+    public float getWidth() {
+        return texture.getWidth();
+    }
+
+    public float getHeight(){
+        return texture.getHeight();
+    }
+
+    public void setPosition(float x, float y) {
+        body.setTransform(x, y, 0);
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
 }

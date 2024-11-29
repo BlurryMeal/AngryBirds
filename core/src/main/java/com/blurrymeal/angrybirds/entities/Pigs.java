@@ -91,7 +91,7 @@ public class Pigs implements ContactListener {
         }
     }
 
-    private void destroy() {
+    public void destroy() {
         isDestroyed = true;
     }
 
@@ -168,5 +168,37 @@ public class Pigs implements ContactListener {
     public void reset(){
         collisionOccurred = false;
         world.setContactListener(this);
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public float getX() {
+        return body.getPosition().x;
+    }
+
+    public float getY(){
+        return body.getPosition().y;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight(){
+        return height;
+    }
+
+    public void setPosition(float x, float y) {
+        body.setTransform(x, y, 0);
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
+
+    public float getHealth() {
+        return  health;
     }
 }
