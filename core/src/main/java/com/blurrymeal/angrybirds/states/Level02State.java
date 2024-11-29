@@ -111,8 +111,8 @@ public class Level02State extends State{
         BlueBirdTexture2 = new Texture("bluebird.png");
         birds = new ArrayList<BlueBird>();
         birds.add(new BlueBird(BlueBirdTexture, world, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 10, 10));
-//        birds.add(new BlueBird(BlueBirdTexture, world, 55, 75, 31, 31));
-//        birds.add(new BlueBird(BlueBirdTexture, world,25, 75, 31, 31));
+        birds.add(new BlueBird(BlueBirdTexture, world, 55, 75, 31, 31));
+        birds.add(new BlueBird(BlueBirdTexture, world,25, 75, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level2BG.jpg");
