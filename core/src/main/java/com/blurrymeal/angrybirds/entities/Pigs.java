@@ -17,6 +17,7 @@ public class Pigs implements ContactListener {
     private boolean isDestroyed = false;
     private float GROUND_HEIGHT;
     private int pigScore = 800;
+    private boolean collisionOccurred = false;
 
 
     public Pigs(Texture texture, float x, float y, float width, float height, World world, float groundHeight) {
@@ -107,7 +108,7 @@ public class Pigs implements ContactListener {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
         System.out.println("help");
-
+        collisionOccurred = true;
         if((fixtureA.getUserData().equals("Pig") && fixtureB.getUserData().equals("RedBird")) || (fixtureA.getUserData().equals("RedBird") && fixtureB.getUserData().equals("Pig"))) {
             Pigs pig = null;
             if (fixtureA.getUserData().equals("Pig")) {
@@ -146,6 +147,7 @@ public class Pigs implements ContactListener {
                 pig.destroy();
             }
         }
+        reset();
     }
 
     @Override
@@ -161,5 +163,10 @@ public class Pigs implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    public void reset(){
+        collisionOccurred = false;
+        world.setContactListener(this);
     }
 }

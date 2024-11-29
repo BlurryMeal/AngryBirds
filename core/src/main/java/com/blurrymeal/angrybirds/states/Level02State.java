@@ -125,8 +125,8 @@ public class Level02State extends State{
         WinButton = new Texture("WinButton.png");
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 668, 170, 27, 27, world, 70f));
-        pigs.add(new Pigs(new Texture("smallPig.png"), 668, 210, 27, 27, world, 70f));
+        pigs.add(new Pigs(new Texture("kingpig.png"), 668, 170, 27, 27, world, 70f));
+        pigs.add(new Pigs(new Texture("fatpig.png"), 668, 210, 27, 27, world, 70f));
 
         obstacles = new ArrayList<Obstacles>();
         obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 630, 70,7,45, world, 0f));
