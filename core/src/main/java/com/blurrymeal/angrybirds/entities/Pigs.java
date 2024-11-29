@@ -89,9 +89,11 @@ public class Pigs implements ContactListener {
             destroy();
         }
     }
+
     private void destroy() {
         isDestroyed = true;
     }
+
     public Body getBody() {
         return body;
     }

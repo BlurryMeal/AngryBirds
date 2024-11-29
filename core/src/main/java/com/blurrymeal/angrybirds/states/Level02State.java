@@ -125,22 +125,23 @@ public class Level02State extends State{
         WinButton = new Texture("WinButton.png");
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 665, 160, 27, 27, world, 70f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 668, 170, 27, 27, world, 70f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 668, 210, 27, 27, world, 70f));
 
         obstacles = new ArrayList<Obstacles>();
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 645, 75, world, 0f));
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 685, 75, world, 0f));
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 665, 100, world, 90f));
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 1245, 130, world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 630, 70,7,45, world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 700, 70, 7,45,world, 0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 665, 80,7,90, world, 90f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 1245, 130,7,45, world, 0f));
 
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 645, 73));
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 692, 73));
-//        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 692, 130));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 642, 130,7,60,world,0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 689, 130,7,60,world,0f));
+        obstacles.add(new Obstacles(new Texture("woodVertObst.png"), 665, 160,7,80,world,90f));
 //        obstacles.add(new Obstacles(new Texture("woodHoriObst.png"), 645, 187));
 //        obstacles.add(new Obstacles(new Texture("woodHoriObst.png"), 645, 128));
-//        obstacles.add(new Obstacles(new Texture("squareobs.png"), 658, 132));
-//        obstacles.add(new Obstacles(new Texture("triangleobs.png"), 699, 75));
-//        obstacles.add(new Obstacles(new Texture("triangleobs.png"), 617, 75));
+        obstacles.add(new Obstacles(new Texture("squareobs.png"), 652,132, 30,30,world,0f));
+        obstacles.add(new Obstacles(new Texture("triangleobs.png"), 720, 75, 30,30,world,0f));
+        obstacles.add(new Obstacles(new Texture("triangleobs.png"), 595, 75,30,30,world,0f));
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
