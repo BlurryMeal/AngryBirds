@@ -364,6 +364,7 @@ public class Level01State extends State{
     public void render(SpriteBatch batch) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
         batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         batch.draw(slingshot, 40, 160);

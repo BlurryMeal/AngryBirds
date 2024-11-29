@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.*;
 import com.blurrymeal.angrybirds.Main;
-import com.blurrymeal.angrybirds.entities.Bird;
-import com.blurrymeal.angrybirds.entities.Obstacle;
-import com.blurrymeal.angrybirds.entities.Pig;
+import com.blurrymeal.angrybirds.entities.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Level03State extends State{
@@ -26,10 +26,10 @@ public class Level03State extends State{
     private boolean isDragging = false;
     private Vector2 birdPosition;
     private List<Vector2> trajectoryPoints;
-    private ArrayList<Bird> birds;
+    private ArrayList<RedBird> birds;
     private Texture redBirdTexture;
-    private ArrayList<Obstacle> obstacles;
-    private ArrayList<Pig> pigs;
+    private ArrayList<Obstacles> obstacles;
+    private ArrayList<Pigs> pigs;
 
     private Texture pauseButton;
     private Texture restartButton;
@@ -38,8 +38,8 @@ public class Level03State extends State{
     private Texture birdCountContainer;
     private Texture pigCountContainer;
 
-    private int pigCounter = 3;
-    private int birdCounter = 3;
+    private int pigCounter;
+    private int birdCounter;
 
     private BitmapFont font;
     private BitmapFont scoreFont;
@@ -51,20 +51,66 @@ public class Level03State extends State{
 
     private Texture LoseButton;
     private Texture WinButton;
-
     private Texture loadGameButton;
     private BitmapFont saveGameFont;
+
+    private World world;
+    private Box2DDebugRenderer debugRenderer;
+    private static final float TIME_STEP = 1/60f;
+
+    private ArrayList<Pigs> pigsToRemove = new ArrayList<>();
+
+    private float winTimer = 0f;
+    private boolean isPigsClear = false;
+    private static final float WIN_DELAY = 1f;
+
+    private float loseTimer = 0f;
+    private static final float LOSE_DELAY = 1.5f;
+    private boolean isBirdsClear = false;
+
+    private void createGround(World world) {
+        float groundHeight = 110f;
+
+        BodyDef groundBodyDef = new BodyDef();
+        groundBodyDef.type = BodyDef.BodyType.StaticBody;
+        groundBodyDef.position.set(0, groundHeight / Main.PPM);
+
+        Body groundBody = world.createBody(groundBodyDef);
+
+        float groundWidth = 2000 / Main.PPM;
+        PolygonShape groundShape = new PolygonShape();
+        groundShape.setAsBox(groundWidth, 5 / Main.PPM);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = groundShape;
+        fixtureDef.friction = 1f;
+        fixtureDef.restitution = 0;
+
+
+        Fixture fixture = groundBody.createFixture(fixtureDef);
+        fixture.setUserData(this);
+
+        groundShape.dispose();
+    }
 
 
     public Level03State(GameStateManager gsm) {
         super(gsm);
 
+        world = new World(new Vector2(0, -9.8f), true);
+        debugRenderer = new Box2DDebugRenderer();
+
+        world.step(1/60f, 6, 2);
+
+
+        createGround(world);
+
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
         redBirdTexture = new Texture("redBird.png");
-        birds = new ArrayList<Bird>();
-        birds.add(new Bird(redBirdTexture, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
-        birds.add(new Bird(redBirdTexture, 55, 117, 31, 31));
-        birds.add(new Bird(redBirdTexture, 25, 117, 31, 31));
+        birds = new ArrayList<RedBird>();
+        birds.add(new RedBird(redBirdTexture, world,BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
+        birds.add(new RedBird(redBirdTexture, world,55, 117, 31, 31));
+        birds.add(new RedBird(redBirdTexture, world,25, 117, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level3BG.jpg");
@@ -76,21 +122,26 @@ public class Level03State extends State{
         LoseButton = new Texture("LoseButton.png");
         WinButton = new Texture("WinButton.png");
 
-        pigs = new ArrayList<Pig>();
-        pigs.add(new Pig(new Texture("smallPig.png"), 551, 216, 27, 27));
-        pigs.add(new Pig(new Texture("smallPig.png"), 651, 216, 27, 27));
-        pigs.add(new Pig(new Texture("smallPig.png"), 751, 216, 27, 27));
-        obstacles = new ArrayList<Obstacle>();
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 661, 140));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 561, 140));
-        obstacles.add(new Obstacle(new Texture("woodVertObst.png"), 761, 140));
-        obstacles.add(new Obstacle(new Texture("greysmallobsthori.png"), 644, 197));
-        obstacles.add(new Obstacle(new Texture("greysmallobsthori.png"), 544, 197));
-        obstacles.add(new Obstacle(new Texture("greysmallobsthori.png"), 744, 197));
+        pigs = new ArrayList<Pigs>();
+        pigs.add(new Pigs(new Texture("smallPig.png"), 564, 230, 27, 27, world, 110f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 664, 230, 27, 27,world, 110f));
+        pigs.add(new Pigs(new Texture("smallPig.png"), 764, 230, 27, 27,world, 110f));
+        obstacles = new ArrayList<Obstacles>();
+        obstacles.add(new Obstacles(new Texture("bluehoriobst.png"), 658, 140, 13,70,world,0f));
+        obstacles.add(new Obstacles(new Texture("bluehoriobst.png"), 558, 140, 13,70,world,0f));
+        obstacles.add(new Obstacles(new Texture("bluehoriobst.png"), 758, 140,13,70,world,0f));
+        obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 658, 210,15,40,world,90f));
+        obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 558, 210,15,40,world,90f));
+        obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 758, 210,15,40,world,90f));
+//
+        obstacles.add(new Obstacles(new Texture("squareobs.png"), 450, 115,27,27,world,110f));
 
-        obstacles.add(new Obstacle(new Texture("squareobs.png"), 550, 115));
-        obstacles.add(new Obstacle(new Texture("squareobs.png"), 650, 115));
-        obstacles.add(new Obstacle(new Texture("squareobs.png"), 750, 115));
+        obstacles.add(new Obstacles(new Texture("squareobs.png"), 550, 115,27,27,world,0f));
+        obstacles.add(new Obstacles(new Texture("squareobs.png"), 650, 115,27,27,world,0f));
+        obstacles.add(new Obstacles(new Texture("squareobs.png"), 750, 115 ,27,27,world,7f));
+
+        obstacles.add(new Obstacles(new Texture("squareobs.png"), 1250, 115 ,27,27,world,7f));
+
 
         pauseButton = new Texture("pauseButton.png");
         restartButton = new Texture("restartButton.png");
@@ -110,7 +161,6 @@ public class Level03State extends State{
 
         parameter.size = 28;
         scoreFont = generator.generateFont(parameter);
-
         parameter.size = 24;
         saveGameFont = generator.generateFont(parameter);
 
@@ -173,7 +223,7 @@ public class Level03State extends State{
             birdPosition.x = Math.max(BIRDSLINGPOS_X - 50, Math.min(touchPos.x, BIRDSLINGPOS_X));
             birdPosition.y = Math.max(BIRDSLINGPOS_Y - 50, Math.min(touchPos.y, BIRDSLINGPOS_Y + 50));
 
-            for (Bird bird : birds){
+            for (RedBird bird : birds){
                 bird.getPosition().set(birdPosition.x, birdPosition.y);
             }
 
@@ -183,6 +233,14 @@ public class Level03State extends State{
 
         if (!Gdx.input.isTouched() && isDragging) {
             isDragging = false;
+            Vector2 velocity = new Vector2(BIRDSLINGPOS_X - birdPosition.x, BIRDSLINGPOS_Y - birdPosition.y).scl(3);
+            for (RedBird bird : birds) {
+                if (!bird.isInMotion()) {
+                    bird.launch(velocity);
+                    break;
+                }
+            }
+            trajectoryPoints.clear();
         }
     }
 
@@ -191,16 +249,91 @@ public class Level03State extends State{
     @Override
     public void update(float delta) {
         handleInput();
-        for (Bird bird: birds){
+
+        pigCounter = pigs.size();
+        birdCounter = birds.size();
+
+        Iterator<RedBird> birdIterator = birds.iterator();
+        boolean allBirdsStationary = true;
+        boolean birdRemoved = false;
+        while (birdIterator.hasNext()) {
+            RedBird bird = birdIterator.next();
             bird.update(delta);
-        }
-        for(Pig pig : pigs) {
-            pig.update(delta);
+
+            if (bird.isInMotion() && bird.hasStopped()) {
+                bird.getBody().getWorld().destroyBody(bird.getBody());
+                birdIterator.remove();
+                birdCounter--;
+                birdRemoved = true;
+                break;
+            } else if (bird.isInMotion()) {
+                allBirdsStationary = false;
+            }
         }
 
-        for(Obstacle obstacle : obstacles) {
+        if (birdRemoved && !birds.isEmpty()) {
+            birdPosition.set(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
+
+            RedBird nextBird = birds.get(0);
+
+            nextBird.getBody().setTransform(
+                BIRDSLINGPOS_X / Main.PPM,
+                BIRDSLINGPOS_Y / Main.PPM,
+                0
+            );
+            nextBird.getBody().setType(BodyDef.BodyType.StaticBody);
+
+            trajectoryPoints.clear();
+        }
+
+        if(pigCounter == 0 && !isPigsClear){
+            isPigsClear = true;
+            winTimer = 0f;
+        }
+
+        if(birdCounter == 0 && pigCounter > 0 && !isBirdsClear){
+            loseTimer = 0f;
+            isBirdsClear = true;
+        }
+
+        if(isPigsClear){
+            winTimer += delta;
+
+            if(winTimer >= WIN_DELAY){
+                gameStateManager.setState(new WinLevelState(gameStateManager, this, 3, this.getScore()));
+                return;
+            }
+        }
+
+        world.step(TIME_STEP, 6, 2);
+
+        for (RedBird bird: birds){
+            bird.update(delta);
+        }
+
+
+        for(Obstacles obstacle : obstacles) {
             obstacle.update(delta);
         }
+
+        for (Iterator<Pigs> iterator = pigs.iterator(); iterator.hasNext(); ) {
+            Pigs pig = iterator.next();
+            pig.update(delta);
+
+            if (pig.isDestroyed()) {
+                iterator.remove();
+                pigCounter--;
+                score += pig.getScore();
+            }
+        }
+
+        for(Pigs pig : pigs) {
+            pig.update(delta);
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override
@@ -218,16 +351,18 @@ public class Level03State extends State{
         batch.draw(LoseButton, 880, 250, 60, 60);
         batch.draw(WinButton, 880, 320, 60, 60);
 
-        for(Obstacle obstacle : obstacles) {
+        for(Obstacles obstacle : obstacles) {
             obstacle.render(batch);
         }
 
-        for (Bird bird: birds){
-            bird.render(batch);
-        }
-        for(Pig pig : pigs) {
+        for(Pigs pig : pigs) {
             pig.render(batch);
         }
+
+        for (RedBird bird: birds){
+            bird.render(batch);
+        }
+
 
         // Draw trajectory
         for (Vector2 point : trajectoryPoints) {
@@ -253,10 +388,15 @@ public class Level03State extends State{
 
     @Override
     public void dispose() {
+        for (Obstacles obstacle : obstacles) {
+            obstacle.dispose();
+        }
         redBirdTexture.dispose();
         slingshot.dispose();
         background.dispose();
         font.dispose();
+        world.dispose();
+        debugRenderer.dispose();
     }
 
     @Override
