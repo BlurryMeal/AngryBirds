@@ -133,6 +133,19 @@ public class Pigs implements ContactListener {
                 pig.destroy();
             }
         }
+
+        if((fixtureA.getUserData().equals("Pig") && fixtureB.getUserData().equals("YellowBird")) || (fixtureA.getUserData().equals("YellowBird") && fixtureB.getUserData().equals("Pig"))) {
+            Pigs pig = null;
+            if (fixtureA.getUserData().equals("Pig")) {
+                pig = (Pigs) fixtureA.getBody().getUserData();
+            } else {
+                pig = (Pigs) fixtureB.getBody().getUserData();
+            }
+
+            if (pig != null) {
+                pig.destroy();
+            }
+        }
     }
 
     @Override

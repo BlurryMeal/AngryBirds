@@ -26,8 +26,9 @@ public class Level03State extends State{
     private boolean isDragging = false;
     private Vector2 birdPosition;
     private List<Vector2> trajectoryPoints;
-    private ArrayList<RedBird> birds;
-    private Texture redBirdTexture;
+    private ArrayList<YellowBird> birds;
+    private Texture yellowBirdTexture;
+    private Texture yellowBirdTexture2;
     private ArrayList<Obstacles> obstacles;
     private ArrayList<Pigs> pigs;
 
@@ -106,11 +107,13 @@ public class Level03State extends State{
         createGround(world);
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
-        redBirdTexture = new Texture("redBird.png");
-        birds = new ArrayList<RedBird>();
-        birds.add(new RedBird(redBirdTexture, world,BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
-        birds.add(new RedBird(redBirdTexture, world,55, 117, 31, 31));
-        birds.add(new RedBird(redBirdTexture, world,25, 117, 31, 31));
+        yellowBirdTexture = new Texture("yellowbird.png");
+        yellowBirdTexture2 = new Texture("yellowbird.png");
+
+        birds = new ArrayList<YellowBird>();
+        birds.add(new YellowBird(yellowBirdTexture, world,BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
+        birds.add(new YellowBird(yellowBirdTexture, world,55, 117, 31, 31));
+        birds.add(new YellowBird(yellowBirdTexture2, world,25, 117, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level3BG.jpg");
@@ -223,7 +226,7 @@ public class Level03State extends State{
             birdPosition.x = Math.max(BIRDSLINGPOS_X - 50, Math.min(touchPos.x, BIRDSLINGPOS_X));
             birdPosition.y = Math.max(BIRDSLINGPOS_Y - 50, Math.min(touchPos.y, BIRDSLINGPOS_Y + 50));
 
-            for (RedBird bird : birds){
+            for (YellowBird bird : birds){
                 bird.getPosition().set(birdPosition.x, birdPosition.y);
             }
 
@@ -234,7 +237,7 @@ public class Level03State extends State{
         if (!Gdx.input.isTouched() && isDragging) {
             isDragging = false;
             Vector2 velocity = new Vector2(BIRDSLINGPOS_X - birdPosition.x, BIRDSLINGPOS_Y - birdPosition.y).scl(3);
-            for (RedBird bird : birds) {
+            for (YellowBird bird : birds) {
                 if (!bird.isInMotion()) {
                     bird.launch(velocity);
                     break;
@@ -253,11 +256,11 @@ public class Level03State extends State{
         pigCounter = pigs.size();
         birdCounter = birds.size();
 
-        Iterator<RedBird> birdIterator = birds.iterator();
+        Iterator<YellowBird> birdIterator = birds.iterator();
         boolean allBirdsStationary = true;
         boolean birdRemoved = false;
         while (birdIterator.hasNext()) {
-            RedBird bird = birdIterator.next();
+            YellowBird bird = birdIterator.next();
             bird.update(delta);
 
             if (bird.isInMotion() && bird.hasStopped()) {
@@ -274,7 +277,7 @@ public class Level03State extends State{
         if (birdRemoved && !birds.isEmpty()) {
             birdPosition.set(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
 
-            RedBird nextBird = birds.get(0);
+            YellowBird nextBird = birds.get(0);
 
             nextBird.getBody().setTransform(
                 BIRDSLINGPOS_X / Main.PPM,
@@ -307,7 +310,7 @@ public class Level03State extends State{
 
         world.step(TIME_STEP, 6, 2);
 
-        for (RedBird bird: birds){
+        for (YellowBird bird: birds){
             bird.update(delta);
         }
 
@@ -359,14 +362,14 @@ public class Level03State extends State{
             pig.render(batch);
         }
 
-        for (RedBird bird: birds){
+        for (YellowBird bird: birds){
             bird.render(batch);
         }
 
 
         // Draw trajectory
         for (Vector2 point : trajectoryPoints) {
-            batch.draw(redBirdTexture, point.x, point.y, 5, 5);  // Draw small circles as trajectory points
+            batch.draw(yellowBirdTexture2, point.x, point.y, 5, 5);  // Draw small circles as trajectory points
         }
 
 
@@ -391,7 +394,7 @@ public class Level03State extends State{
         for (Obstacles obstacle : obstacles) {
             obstacle.dispose();
         }
-        redBirdTexture.dispose();
+        yellowBirdTexture.dispose();
         slingshot.dispose();
         background.dispose();
         font.dispose();

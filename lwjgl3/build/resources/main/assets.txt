@@ -54,3 +54,4 @@ triangleobs.png
 WinButton.png
 woodHoriObst.png
 woodVertObst.png
+yellowbird.png
