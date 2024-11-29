@@ -2,6 +2,8 @@
 package com.blurrymeal.angrybirds.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -72,6 +74,8 @@ public class Level01State extends State{
     private static final float LOSE_DELAY = 1.5f;
     private boolean isBirdsClear = false;
 
+    private Sound birdLaunchSound;
+
     private void createGround(World world) {
         float groundHeight = 160;
 
@@ -111,6 +115,10 @@ public class Level01State extends State{
 
 
         createGround(world);
+
+
+
+        birdLaunchSound = Gdx.audio.newSound(Gdx.files.internal("RedBirdFlying.mp3"));
 
 
         camera.setToOrtho(false, Main.WIDTH, Main.HEIGHT);
@@ -247,6 +255,7 @@ public class Level01State extends State{
             for (RedBird bird : birds) {
                 if (!bird.isInMotion()) {
                     bird.launch(velocity);
+                    birdLaunchSound.play(0.5f);
                     break;
                 }
             }

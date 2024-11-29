@@ -2,6 +2,7 @@ package com.blurrymeal.angrybirds;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,6 +23,7 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
 
     private Texture image;
+    private Music backgroundMusic;
 
     @Override
     public void create() {
@@ -29,6 +31,12 @@ public class Main extends ApplicationAdapter {
         gameStateManager = new GameStateManager();
         image = new Texture("libgdx.png");
         Gdx.gl.glClearColor(0, 0, 0, 1);
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("AngryBirdsTheme.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.2f);
+        backgroundMusic.play();
+
         gameStateManager.pushState(new HomeState(gameStateManager));
 
     }
