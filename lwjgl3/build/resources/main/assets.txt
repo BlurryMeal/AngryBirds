@@ -1,4 +1,5 @@
 angrybirds-regular.ttf
+AngryBirdsTheme.mp3
 angryBirdTitle.png
 birdCount.png
 Blatant 400.otf
@@ -42,6 +43,7 @@ pausedMenuBG.png
 pigCount.png
 playButton.png
 redBird.png
+RedBirdFlying.mp3
 restartButton.png
 restartMenuButton.png
 resumeMenuButton.png
