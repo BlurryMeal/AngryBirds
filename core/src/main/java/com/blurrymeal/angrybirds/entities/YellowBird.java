@@ -94,4 +94,13 @@ public class YellowBird {
     public Body getBody() {
         return this.body;
     }
+
+    public void activateAbility() {
+
+        Vector2 currentVelocity = getBody().getLinearVelocity();
+        Vector2 boostedVelocity = currentVelocity.scl(2);
+        getBody().setLinearVelocity(boostedVelocity);
+
+        System.out.println("Special ability activated! Speed doubled.");
+    }
 }

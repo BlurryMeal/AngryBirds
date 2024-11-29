@@ -6,12 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.blurrymeal.angrybirds.Main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlueBird {
     private Texture texture;
     private Body body;
     private float width;
     private float height;
     private float maxDamage = 40f;
+    private boolean specialAbilityActivated = false;
+    private List<BlueBird> splitBirds = new ArrayList<>();
 
     private boolean inMotion;
 
@@ -93,5 +98,49 @@ public class BlueBird {
 
     public Body getBody() {
         return this.body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
+    public void activateAbility() {
+        if (inMotion && !specialAbilityActivated) {
+            System.out.println("Blue Bird special ability: Splitting into three birds!");
+            specialAbilityActivated = true;
+
+            // Get the current world, position, and velocity
+            World world = body.getWorld();
+            Vector2 currentPosition = body.getPosition();
+            Vector2 currentVelocity = body.getLinearVelocity();
+
+            // Define angle variations for splitting
+            float[] angles = {-30, 30}; // Angles in degrees for left and right birds
+
+            // Create and launch split birds
+            for (float angle : angles) {
+                // Rotate velocity vector for each split bird
+                Vector2 splitVelocity = new Vector2(currentVelocity);
+                splitVelocity.setAngleDeg(splitVelocity.angleDeg() + angle);
+
+                // Create new split bird
+                BlueBird splitBird = new BlueBird(
+                    texture,
+                    world,
+                    currentPosition.x * Main.PPM, // Adjust position slightly
+                    currentPosition.y * Main.PPM,
+                    width,
+                    height
+                );
+
+                // Launch the bird with the rotated velocity
+                splitBird.launch(splitVelocity);
+                splitBirds.add(splitBird);
+            }
+        }
+    }
+
+    public List<BlueBird> getSplitBirds() {
+        return splitBirds;
     }
 }

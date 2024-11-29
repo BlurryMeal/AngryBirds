@@ -1,6 +1,7 @@
 package com.blurrymeal.angrybirds.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,8 +19,8 @@ import java.util.List;
 
 public class Level02State extends State{
 
-    private final int BIRDSLINGPOS_X=79;
-    private final int BIRDSLINGPOS_Y=140;
+    private final int BIRDSLINGPOS_X=92;
+    private final int BIRDSLINGPOS_Y=150;
     private Texture slingshot;
     private Texture background;
 
@@ -70,6 +71,8 @@ public class Level02State extends State{
     private static final float LOSE_DELAY = 1.5f;
     private boolean isBirdsClear = false;
 
+    private int birdsLaunched = 0;
+
     private void createGround(World world) {
         float groundHeight = 70f;
 
@@ -111,8 +114,8 @@ public class Level02State extends State{
         BlueBirdTexture2 = new Texture("bluebird.png");
         birds = new ArrayList<BlueBird>();
         birds.add(new BlueBird(BlueBirdTexture, world, BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 10, 10));
-        birds.add(new BlueBird(BlueBirdTexture, world, 55, 75, 31, 31));
-        birds.add(new BlueBird(BlueBirdTexture, world,25, 75, 31, 31));
+        birds.add(new BlueBird(BlueBirdTexture, world, 55, 90, 31, 31));
+        birds.add(new BlueBird(BlueBirdTexture, world,25, 90, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level2BG.jpg");
@@ -353,6 +356,15 @@ public class Level02State extends State{
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            for (BlueBird bird : birds) {
+                if (bird.isInMotion()) {
+                    bird.activateAbility();
+                    break;
+                }
+            }
+        }
+
         batch.begin();
         batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
         batch.draw(slingshot, 55, 70);
@@ -465,6 +477,8 @@ public class Level02State extends State{
         }
         this.pigCounter = savedPigCounter;
     }
+
+
 
 
 }

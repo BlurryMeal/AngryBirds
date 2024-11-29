@@ -1,6 +1,7 @@
 package com.blurrymeal.angrybirds.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,8 +19,8 @@ import java.util.List;
 
 public class Level03State extends State{
 
-    private final int BIRDSLINGPOS_X=79;
-    private final int BIRDSLINGPOS_Y=182;
+    private final int BIRDSLINGPOS_X=90;
+    private final int BIRDSLINGPOS_Y=193;
     private Texture slingshot;
     private Texture background;
 
@@ -112,8 +113,8 @@ public class Level03State extends State{
 
         birds = new ArrayList<YellowBird>();
         birds.add(new YellowBird(yellowBirdTexture, world,BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
-        birds.add(new YellowBird(yellowBirdTexture, world,55, 117, 31, 31));
-        birds.add(new YellowBird(yellowBirdTexture2, world,25, 117, 31, 31));
+        birds.add(new YellowBird(yellowBirdTexture, world,55, 130, 31, 31));
+        birds.add(new YellowBird(yellowBirdTexture2, world,25, 130, 31, 31));
 
         slingshot = new Texture("slingshot.png");
         background = new Texture("level3BG.jpg");
@@ -137,7 +138,7 @@ public class Level03State extends State{
         obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 558, 210,15,40,world,90f));
         obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 758, 210,15,40,world,90f));
 //
-        obstacles.add(new Obstacles(new Texture("squareobs.png"), 450, 115,27,27,world,110f));
+//        obstacles.add(new Obstacles(new Texture("squareobs.png"), 450, 115,27,27,world,110f));
 
         obstacles.add(new Obstacles(new Texture("squareobs.png"), 550, 115,27,27,world,0f));
         obstacles.add(new Obstacles(new Texture("squareobs.png"), 650, 115,27,27,world,0f));
@@ -344,6 +345,15 @@ public class Level03State extends State{
     public void render(SpriteBatch batch) {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            for (YellowBird bird : birds) {
+                if (bird.isInMotion()) {
+                    bird.activateAbility();
+                    break;
+                }
+            }
+        }
 
         batch.begin();
         batch.draw(background, 0, 0, Main.WIDTH, Main.HEIGHT);
