@@ -475,7 +475,6 @@ public class Level01State extends State{
     }
 
     public void restoreBirdCounter(int savedBirdCounter) {
-        // You might need to adjust the birds list or reset based on the saved counter
         while (this.birds.size() > savedBirdCounter) {
             this.birds.remove(this.birds.size() - 1);
         }
@@ -483,7 +482,6 @@ public class Level01State extends State{
     }
 
     public void restorePigCounter(int savedPigCounter) {
-        // You might need to adjust the pigs list or reset based on the saved counter
         while (this.pigs.size() > savedPigCounter) {
             this.pigs.remove(this.pigs.size() - 1);
         }

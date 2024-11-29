@@ -214,6 +214,7 @@ public class Level03State extends State{
             //Save Button
             if(touchPos.x >= 545 && touchPos.x <= 715 && touchPos.y >= Main.HEIGHT - 75 && touchPos.y <= Main.HEIGHT - 25){
                 System.out.println("Game Saved");
+                GameSaveManager.saveGame(this);
                 gameStateManager.pushState(new HomeState(gameStateManager));
             }
 
@@ -426,6 +427,33 @@ public class Level03State extends State{
         }
 
         return trajectoryPoints;
+    }
+
+    public int getBirdCounter() {
+        return birdCounter;
+    }
+
+    public int getPigCounter(){
+        return pigCounter;
+    }
+
+
+    public void restoreScore(int savedScore) {
+        this.score = savedScore;
+    }
+
+    public void restoreBirdCounter(int savedBirdCounter) {
+        while (this.birds.size() > savedBirdCounter) {
+            this.birds.remove(this.birds.size() - 1);
+        }
+        this.birdCounter = savedBirdCounter;
+    }
+
+    public void restorePigCounter(int savedPigCounter) {
+        while (this.pigs.size() > savedPigCounter) {
+            this.pigs.remove(this.pigs.size() - 1);
+        }
+        this.pigCounter = savedPigCounter;
     }
 
 

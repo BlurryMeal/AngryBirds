@@ -59,11 +59,36 @@ public class HomeState extends State{
                 GameSaveManager.SavedGameState savedGame = GameSaveManager.loadGame();
 
                 if(savedGame != null){
-                    Level01State loadedLevel = new Level01State(gameStateManager);
+                    State loadedLevel;
+                    switch (savedGame.currentLevel){
+                        case 1:
+                            loadedLevel = new Level01State(gameStateManager);
+                            break;
+                        case 2:
+                            loadedLevel = new Level02State(gameStateManager);
+                            break;
+                        case 3:
+                            loadedLevel = new Level03State(gameStateManager);
+                            break;
+                        default:
+                            System.out.println("Invalid Level");
+                            return;
+                    }
 
-                    loadedLevel.restoreScore(savedGame.score);
-                    loadedLevel.restoreBirdCounter(savedGame.birdCounter);
-                    loadedLevel.restorePigCounter(savedGame.pigCounter);
+                    if(loadedLevel instanceof Level01State){
+                        ((Level01State) loadedLevel).restoreScore(savedGame.score);
+                        ((Level01State) loadedLevel).restoreBirdCounter(savedGame.birdCounter);
+                        ((Level01State) loadedLevel).restorePigCounter(savedGame.pigCounter);
+                    }else if(loadedLevel instanceof Level02State){
+                        ((Level02State) loadedLevel).restoreScore(savedGame.score);
+                        ((Level02State) loadedLevel).restoreBirdCounter(savedGame.birdCounter);
+                        ((Level02State) loadedLevel).restorePigCounter(savedGame.pigCounter);
+                    }else if(loadedLevel instanceof Level03State){
+                        ((Level03State) loadedLevel).restoreScore(savedGame.score);
+                        ((Level03State) loadedLevel).restoreBirdCounter(savedGame.birdCounter);
+                        ((Level03State) loadedLevel).restorePigCounter(savedGame.pigCounter);
+                    }
+
 
                     gameStateManager.setState(loadedLevel);
                 }else{

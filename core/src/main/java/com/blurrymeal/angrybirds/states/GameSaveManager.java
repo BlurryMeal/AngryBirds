@@ -16,19 +16,51 @@ public class GameSaveManager {
         public int birdCounter;
         public int pigCounter;
 
+        // Add more level-specific attributes as needed
         public SavedGameState() {}
 
+        // Constructor for Level01State
         public SavedGameState(Level01State level) {
             this.currentLevel = 1;
             this.score = level.getScore();
             this.birdCounter = level.getBirdCounter();
             this.pigCounter = level.getPigCounter();
         }
+
+        // Constructor for Level02State
+        public SavedGameState(Level02State level) {
+            this.currentLevel = 2;
+            this.score = level.getScore();
+            this.birdCounter = level.getBirdCounter();
+            this.pigCounter = level.getPigCounter();
+        }
+
+        public SavedGameState(Level03State level) {
+            this.currentLevel = 3;
+            this.score = level.getScore();
+            this.birdCounter = level.getBirdCounter();
+            this.pigCounter = level.getPigCounter();
+        }
+
+        // Add more constructors for additional levels as needed
+        // For example: public SavedGameState(Level03State level) { ... }
     }
 
-    public static void saveGame(Level01State currentLevel) {
+    public static void saveGame(State currentLevel) {
         try {
-            SavedGameState savedState = new SavedGameState(currentLevel);
+            SavedGameState savedState;
+
+            // Use instanceof to determine the correct level type
+            if (currentLevel instanceof Level01State) {
+                savedState = new SavedGameState((Level01State) currentLevel);
+            } else if (currentLevel instanceof Level02State) {
+                savedState = new SavedGameState((Level02State) currentLevel);
+            } else if(currentLevel instanceof Level03State) {
+                savedState = new SavedGameState((Level03State) currentLevel);
+            }
+            else {
+                throw new IllegalArgumentException("Unsupported level type");
+            }
 
             Json json = new Json();
             json.setOutputType(JsonWriter.OutputType.json);
