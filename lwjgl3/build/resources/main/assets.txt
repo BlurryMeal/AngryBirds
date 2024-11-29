@@ -11,6 +11,7 @@ bluevertobst.png
 cloud.png
 dullBG.png
 exitMenuButton.png
+fatpig.png
 gameEndBG.jpg
 gameEndContainer.png
 goBackIcon.png
@@ -18,6 +19,7 @@ greysmallobsthori.png
 greyvertob.png
 greyvertobs.png
 img.png
+kingpig.png
 level01Icon.png
 level02Icon.png
 level03Icon.png

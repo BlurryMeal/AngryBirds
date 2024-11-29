@@ -126,14 +126,14 @@ public class Level03State extends State{
         WinButton = new Texture("WinButton.png");
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 564, 230, 27, 27, world, 110f));
-        pigs.add(new Pigs(new Texture("smallPig.png"), 664, 230, 27, 27,world, 110f));
+        pigs.add(new Pigs(new Texture("fatpig.png"), 564, 230, 28 , 28, world, 110f));
+        pigs.add(new Pigs(new Texture("kingpig.png"), 665, 245, 27 , 27,world, 110f));
         pigs.add(new Pigs(new Texture("smallPig.png"), 764, 230, 27, 27,world, 110f));
         obstacles = new ArrayList<Obstacles>();
         obstacles.add(new Obstacles(new Texture("bluehoriobst.png"), 658, 140, 13,70,world,0f));
         obstacles.add(new Obstacles(new Texture("bluehoriobst.png"), 558, 140, 13,70,world,0f));
         obstacles.add(new Obstacles(new Texture("bluehoriobst.png"), 758, 140,13,70,world,0f));
-        obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 658, 210,15,40,world,90f));
+        obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 658, 210,15,45,world,90f));
         obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 558, 210,15,40,world,90f));
         obstacles.add(new Obstacles(new Texture("greysmallobsthori.png"), 758, 210,15,40,world,90f));
 //

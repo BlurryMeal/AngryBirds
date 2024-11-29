@@ -129,9 +129,6 @@ public class Level01State extends State{
         birds.add(new RedBird(redBirdTexture, world,  BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
         birds.add(new RedBird(redBirdTexture, world,  BIRDSLINGPOS_X, BIRDSLINGPOS_Y, 31, 31));
 
-//        birds.add(new Bird(redBirdTexture, 40, 170, 31, 31));
-//        birds.add(new Bird(redBirdTexture, 10, 170, 31, 31));
-
         slingshot = new Texture("slingshot.png");
         background = new Texture("level1BG.jpg");
         birdPosition = new Vector2(BIRDSLINGPOS_X, BIRDSLINGPOS_Y);
@@ -155,7 +152,7 @@ public class Level01State extends State{
 
 
         pigs = new ArrayList<Pigs>();
-        pigs.add(new Pigs(new Texture("smallPig.png"), 596, 230, 27, 27,world, 160f));
+        pigs.add(new Pigs(new Texture("kingpig.png"), 596, 230, 30, 30,world, 160f));
         pigs.add(new Pigs(new Texture("smallPig.png"), 598, 280, 27, 27,world, 160f));
 
         pauseButton = new Texture("pauseButton.png");
@@ -454,7 +451,9 @@ public class Level01State extends State{
 
             trajectoryPoints.add(new Vector2(posX, posY));
 
-            if (posY < 0) break; // Stop when the trajectory hits the ground
+            if (posY < 0) {
+                break; // Stop when the trajectory hits the ground
+            }
         }
 
         return trajectoryPoints;
