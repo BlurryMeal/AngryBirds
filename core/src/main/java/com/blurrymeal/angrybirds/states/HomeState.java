@@ -55,11 +55,26 @@ public class HomeState extends State{
             if(touchPos.x >= (Main.WIDTH/2) - (loadGameButton.getWidth()/5) && touchPos.x <= (Main.WIDTH/2) - (loadGameButton.getWidth()/5) + 250
                 && touchPos.y >= (Main.HEIGHT/2)-220 && touchPos.y <= (Main.HEIGHT/2)-220 + 60){
 
-                if(gameStateManager.getStates().size() > 1){
-                    gameStateManager.popState();
-                }else if(gameStateManager.getStates().size() == 1){
+
+                GameSaveManager.SavedGameState savedGame = GameSaveManager.loadGame();
+
+                if(savedGame != null){
+                    Level01State loadedLevel = new Level01State(gameStateManager);
+
+                    loadedLevel.restoreScore(savedGame.score);
+                    loadedLevel.restoreBirdCounter(savedGame.birdCounter);
+                    loadedLevel.restorePigCounter(savedGame.pigCounter);
+
+                    gameStateManager.setState(loadedLevel);
+                }else{
                     System.out.println("No Saved Game");
                 }
+
+//                if(gameStateManager.getStates().size() > 1){
+//                    gameStateManager.popState();
+//                }else if(gameStateManager.getStates().size() == 1){
+//                    System.out.println("No Saved Game");
+//                }
             }
 
         }

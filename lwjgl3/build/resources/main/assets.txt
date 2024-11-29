@@ -47,6 +47,7 @@ RedBirdFlying.mp3
 restartButton.png
 restartMenuButton.png
 resumeMenuButton.png
+savedgame.json
 scoreContainer.png
 skipButton.png
 slingshot.png
