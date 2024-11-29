@@ -65,8 +65,8 @@ public class Obstacles implements ContactListener {
 
     public void update(float deltaTime) {
         // Update position and rotation
-            position.set(body.getPosition().x * Main.PPM, body.getPosition().y * Main.PPM);
-            rotation = body.getAngle() * MathUtils.radiansToDegrees;
+        position.set(body.getPosition().x * Main.PPM, body.getPosition().y * Main.PPM);
+        rotation = body.getAngle() * MathUtils.radiansToDegrees;
 
     }
 
